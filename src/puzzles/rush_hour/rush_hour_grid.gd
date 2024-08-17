@@ -1,5 +1,5 @@
 class_name RushHourGrid
-extends Control
+extends Puzzle
 
 const GRID_SIZE := 80
 const TWEEN_DURATION := 0.1
@@ -104,6 +104,8 @@ func _input(event: InputEvent) -> void:
 						return
 			# We didn't hit any tiles.
 			selected_block.position = desired_position
+			if selected_block.position.x > 5:
+				puzzle_complete.emit()
 		else:
 			var desired_position := block_initial_position + Vector2(0, mouse_pos.y - mouse_initial_position.y)
 			var min_y = min(grid_pos.y, floor(desired_position.y / GRID_SIZE))

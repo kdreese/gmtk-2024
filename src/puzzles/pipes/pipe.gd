@@ -43,7 +43,7 @@ func setup(_type: int, rotation_deg: int, _grid_position: Vector2i):
 func get_atlas_region() -> Rect2:
 	var output := Rect2()
 	var y_offset := 16 if filled else 0
-	match(type):
+	match type:
 		X_SHAPE:
 			output = Rect2(0, y_offset, 16, 16)
 		T_SHAPE:
@@ -67,7 +67,7 @@ func set_filled(_filled: bool) -> void:
 func get_connected_directions() -> Array[Vector2i]:
 	var output: Array[Vector2i] = []
 	var directions: Array[Vector2i] = []
-	match(type):
+	match type:
 		X_SHAPE:
 			directions = [Vector2i.UP, Vector2i.RIGHT, Vector2i.DOWN, Vector2i.LEFT]
 		T_SHAPE:

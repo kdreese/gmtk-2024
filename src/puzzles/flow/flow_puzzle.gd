@@ -1,4 +1,4 @@
-extends Node2D
+extends Puzzle
 
 ## Possible colors.
 enum {
@@ -268,4 +268,4 @@ func check_if_connected() -> void:
 		unconnected_colors.remove_at(unconnected_colors.find(color))
 
 	if len(unconnected_colors) == 0:
-		print("All color connected.")
+		puzzle_complete.emit()
