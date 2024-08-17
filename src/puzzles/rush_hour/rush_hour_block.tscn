@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://dwk61pfqscplh"]
+
+[ext_resource type="Script" path="res://src/puzzles/rush_hour/rush_hour_block.gd" id="1_ltqql"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_llmx4"]
+size = Vector2(10, 10)
+
+[node name="RushHourBlock" type="TextureRect"]
+offset_right = 80.0
+offset_bottom = 160.0
+texture = SubResource("PlaceholderTexture2D_llmx4")
+script = ExtResource("1_ltqql")
+direction = 1
+block_size = 2
+
+[connection signal="gui_input" from="." to="." method="on_gui_input"]
