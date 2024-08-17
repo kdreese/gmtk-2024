@@ -2,6 +2,7 @@ extends Node2D
 
 ## Possible colors.
 enum {
+	INVALID = -1,
 	RED,
 	GREEN,
 	BLUE,
@@ -16,7 +17,7 @@ const ROTATION_FLAGS = [
 	0,
 	TileSetAtlasSource.TRANSFORM_FLIP_H | TileSetAtlasSource.TRANSFORM_TRANSPOSE,
 	TileSetAtlasSource.TRANSFORM_FLIP_H | TileSetAtlasSource.TRANSFORM_FLIP_V,
-	TileSetAtlasSource.TRANSFORM_FLIP_V| TileSetAtlasSource.TRANSFORM_TRANSPOSE,
+	TileSetAtlasSource.TRANSFORM_FLIP_V | TileSetAtlasSource.TRANSFORM_TRANSPOSE,
 ]
 
 ## Emitted when a color is connected to its node.
@@ -25,7 +26,7 @@ signal color_connected(color: int)
 ## The tile currently underneath the cursor.
 var mouseover_tile: Vector2i = Vector2i(0,0)
 
-var color_to_place: int = -1
+var color_to_place: int = INVALID
 
 var unconnected_colors: Array[int]
 
@@ -46,7 +47,7 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		var mouse_pos := get_local_mouse_position()
-		var grid_coords = wires.local_to_map(wires.to_local(mouse_pos))
+		var grid_coords := wires.local_to_map(wires.to_local(mouse_pos))
 		if grid_coords != mouseover_tile and LEVEL_BOUNDS.has_point(grid_coords):
 			mouse_entered_tile(grid_coords, mouseover_tile)
 			mouseover_tile = grid_coords
@@ -56,21 +57,21 @@ func _input(event: InputEvent) -> void:
 	elif event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			var mouse_pos := get_local_mouse_position()
-			var grid_coords = wires.local_to_map(wires.to_local(mouse_pos))
+			var grid_coords := wires.local_to_map(wires.to_local(mouse_pos))
 			if not LEVEL_BOUNDS.has_point(grid_coords):
 				# We're outside the level boundary
 				return
 			if not event.pressed:
-				color_to_place = -1
+				color_to_place = INVALID
 			elif wires.get_cell_source_id(grid_coords) != 0:
 				# We clicked on nothing.
-				color_to_place = -1
+				color_to_place = INVALID
 			else:
 				var atlas_coords := wires.get_cell_atlas_coords(grid_coords)
 				if atlas_coords.x in [0, 2]:
 					color_to_place = atlas_coords.y - 1
 				else:
-					color_to_place = -1
+					color_to_place = INVALID
 
 
 func mouse_entered_tile(curr: Vector2i, prev: Vector2i) -> void:
@@ -81,12 +82,12 @@ func mouse_entered_tile(curr: Vector2i, prev: Vector2i) -> void:
 
 	if direction not in [Vector2i.LEFT, Vector2i.DOWN, Vector2i.RIGHT, Vector2i.UP]:
 		# We didn't go in a cardinal direction.
-		color_to_place = -1
+		color_to_place = INVALID
 		return
 
 	var is_impassable := (background.get_cell_atlas_coords(curr) == Vector2i(1,0))
 	if is_impassable:
-		color_to_place = -1
+		color_to_place = INVALID
 		return
 
 	var connecting_to_tile: bool = false
@@ -96,12 +97,12 @@ func mouse_entered_tile(curr: Vector2i, prev: Vector2i) -> void:
 		if atlas_coords in [Vector2i(0, color_to_place + 1), Vector2i(2, color_to_place + 1)]:
 			connecting_to_tile = true
 		else:
-			color_to_place = -1
+			color_to_place = INVALID
 			return
 
 	var prev_atlas_coords := wires.get_cell_atlas_coords(prev)
 	if prev_atlas_coords.x == 0:
-		var result = get_vertex_tile_params(direction, true)
+		var result := get_vertex_tile_params(direction, true)
 		wires.set_cell(prev, 0, Vector2i(result[0], color_to_place + 1), result[1])
 	elif prev_atlas_coords.x == 2:
 		var alt_tile := wires.get_cell_alternative_tile(prev)
@@ -113,12 +114,12 @@ func mouse_entered_tile(curr: Vector2i, prev: Vector2i) -> void:
 	if connecting_to_tile:
 		var cur_atlas_coords := wires.get_cell_atlas_coords(curr)
 		if cur_atlas_coords not in [Vector2i(0, color_to_place + 1), Vector2i(2, color_to_place + 1)]:
-			color_to_place = -1
+			color_to_place = INVALID
 			return
 		if cur_atlas_coords.x == 0:
 			var result := get_vertex_tile_params(-direction, true)
 			wires.set_cell(curr, 0, Vector2i(result[0], color_to_place + 1), result[1])
-			color_to_place = -1
+			color_to_place = INVALID
 		else:
 			var alt_tile := wires.get_cell_alternative_tile(curr)
 			var direction_2 := get_vertex_direction(alt_tile, false)
@@ -253,8 +254,8 @@ func check_if_connected() -> void:
 			tiles_searched.append(tile)
 			if wires.get_cell_source_id(tile) != 0:
 				continue
-			var atlas_coords = wires.get_cell_atlas_coords(tile)
-			var alt_tile = wires.get_cell_alternative_tile(tile)
+			var atlas_coords := wires.get_cell_atlas_coords(tile)
+			var alt_tile := wires.get_cell_alternative_tile(tile)
 			if atlas_coords.x in [3, 4]:
 				for direction in get_edge_directions(atlas_coords, alt_tile):
 					var new_tile = tile + direction
