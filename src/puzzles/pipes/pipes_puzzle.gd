@@ -1,21 +1,12 @@
 @tool
 extends Node2D
 
+
 const GRID_DIMENSIONS = Vector2i(8, 8)
 
+
 var sources: Array[Vector2i] = [Vector2i(-1, 3)]
-
 var sinks: Array[Vector2i] = [Vector2i(8, 3)]
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 
 
 func check_water() -> void:

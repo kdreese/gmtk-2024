@@ -2,6 +2,12 @@ class_name Pipe
 extends Sprite2D
 
 
+signal rotation_changed
+
+
+const GRID_SIZE = 64
+
+
 enum {
 	X_SHAPE,
 	T_SHAPE,
@@ -10,14 +16,7 @@ enum {
 }
 
 
-const GRID_SIZE = 64
-
-
-signal rotation_changed
-
-
 var atlas: Texture2D
-
 var type: int
 var filled: bool = false
 var grid_position: Vector2i
@@ -88,33 +87,19 @@ func get_connected_directions() -> Array[Vector2i]:
 
 
 func on_button_pressed():
-	print("Button pressed")
 	if $AnimationPlayer.is_playing():
 		return
 	var initial_rotation = round(rotation_degrees)
 	if initial_rotation == 0:
-		print("0, 90")
 		$AnimationPlayer.play("rotate_0_90")
 	elif initial_rotation == 90:
-		print("90, 180")
 		$AnimationPlayer.play("rotate_90_180")
 	elif initial_rotation == 180:
-		print("180, 270")
 		$AnimationPlayer.play("rotate_180_270")
 	else:
-		print("270, 0")
 		$AnimationPlayer.play("rotate_270_0")
 
 	await $AnimationPlayer.animation_finished
 
 	rotation_degrees = fmod(initial_rotation + 90, 360.0)
 	rotation_changed.emit()
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
