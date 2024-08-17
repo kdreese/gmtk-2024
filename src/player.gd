@@ -21,7 +21,6 @@ extends CharacterBody2D
 @export var unlocked_double_jump := false
 var has_used_grounded_jump := false
 var has_used_aerial_jump := false		# TODO: Convert to num_aerial_jumps in case we want to allow for more than one
-var was_on_floor := false
 var time_since_was_on_floor := 0.0
 var stored_jump_attempt := false
 var time_since_stored_jump_attempted := 0.0
@@ -33,10 +32,10 @@ var dash_time := 0.0
 
 
 func _physics_process(delta: float) -> void:
-	var acceleration
-	var deceleration
-	var turn_speed
-	var max_speed_change
+	var acceleration: float
+	var deceleration: float
+	var turn_speed: float
+	var max_speed_change: float
 	
 	# Add the gravity.
 	if not is_on_floor():
@@ -56,28 +55,22 @@ func _physics_process(delta: float) -> void:
 		deceleration = MAX_DECELERATION
 		turn_speed = MAX_TURN_SPEED
 		if stored_jump_attempt and time_since_stored_jump_attempted < LANDING_JUMP_BUFFER_TIME:
-			Jump()
+			jump()
 		stored_jump_attempt = false
 		time_since_stored_jump_attempted = 0.0
 
 	# Handle jump.
 	# TODO: Make separate jump velocity if we want the double jump to behave differently
-	var can_ground_jump := is_on_floor() or (was_on_floor and not has_used_grounded_jump)
+	var can_ground_jump := is_on_floor() or (was_on_floor() and not has_used_grounded_jump)
 	var can_air_jump := not can_ground_jump and unlocked_double_jump and not has_used_aerial_jump
 	if Input.is_action_just_pressed("jump") and can_ground_jump:
-		Jump()
+		jump()
 		has_used_grounded_jump = true
 	if Input.is_action_just_pressed("jump") and can_air_jump:
-		Jump()
+		jump()
 		has_used_aerial_jump = true
 	if Input.is_action_just_pressed("jump") and not (can_ground_jump or can_air_jump):
 		stored_jump_attempt = true
-	
-	# Handle coyote frames
-	if not is_on_floor() and time_since_was_on_floor <= COYOTE_TIME_LIMIT:
-		was_on_floor = true
-	else:
-		was_on_floor = false
 
 	# Handle dash
 	if Input.is_action_just_pressed("dash") and unlocked_dash:
@@ -108,5 +101,12 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 
-func Jump() -> void:
+func jump() -> void:
 	velocity.y = JUMP_VELOCITY
+
+
+func was_on_floor() -> bool:
+	if not is_on_floor() and time_since_was_on_floor <= COYOTE_TIME_LIMIT:
+		return true
+	else:
+		return false
