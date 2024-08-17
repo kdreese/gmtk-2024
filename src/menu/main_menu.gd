@@ -12,8 +12,7 @@ func _ready() -> void:
 
 
 func _on_play_button_pressed() -> void:
-	#get_tree().change_scene_to_file("res://path/to/game/scene.tscn")
-	pass
+	get_tree().change_scene_to_file("res://src/game.tscn")
 
 
 func _on_credits_button_pressed() -> void:

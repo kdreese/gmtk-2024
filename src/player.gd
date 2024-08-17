@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
 
-const SPEED = 150.0
-const DASH_SPEED = 300.0
+@export var SPEED = 150.0
+@export var DASH_SPEED = 300.0
 @export var MAX_ACCELERATION = 400.0
 @export var MAX_AIR_ACCELERATION = 350.0
 @export var MAX_DECELERATION = 600.0
@@ -12,7 +12,7 @@ const DASH_SPEED = 300.0
 @export var MAX_DASH_ACCELERATION = 4000.0
 @export var MAX_DASH_DECELERATION = 4000.0
 @export var MAX_DASH_TIME = 0.1
-const JUMP_VELOCITY = -300.0
+@export var JUMP_VELOCITY = -300.0
 @export var COYOTE_TIME_LIMIT = 0.2
 @export var LANDING_JUMP_BUFFER_TIME = 0.05
 
