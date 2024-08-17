@@ -1,0 +1,115 @@
+[gd_scene load_steps=10 format=3 uid="uid://bjmfiyf5uklt7"]
+
+[ext_resource type="Texture2D" uid="uid://c23ola5o7xlu2" path="res://assets/pipes_tileset.png" id="1_8trav"]
+[ext_resource type="Script" path="res://src/puzzles/pipes/pipe.gd" id="2_863e4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vlqs1"]
+atlas = ExtResource("1_8trav")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="Animation" id="Animation_ve6sj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_6nlfc"]
+resource_name = "rotate"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.5708]
+}
+
+[sub_resource type="Animation" id="Animation_bn55y"]
+resource_name = "rotate_90_180"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.5708, 3.14159]
+}
+
+[sub_resource type="Animation" id="Animation_xxppm"]
+resource_name = "rotate_180_270"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [3.14159, 4.71239]
+}
+
+[sub_resource type="Animation" id="Animation_2d7a0"]
+resource_name = "rotate_270_0"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [4.71239, 6.28319]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_64k71"]
+_data = {
+"RESET": SubResource("Animation_ve6sj"),
+"rotate_0_90": SubResource("Animation_6nlfc"),
+"rotate_180_270": SubResource("Animation_xxppm"),
+"rotate_270_0": SubResource("Animation_2d7a0"),
+"rotate_90_180": SubResource("Animation_bn55y")
+}
+
+[node name="Pipe" type="Sprite2D"]
+scale = Vector2(4, 4)
+texture = SubResource("AtlasTexture_vlqs1")
+script = ExtResource("2_863e4")
+
+[node name="Button" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+offset_left = -7.0
+offset_top = -7.0
+offset_right = 7.0
+offset_bottom = 7.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_64k71")
+}
+
+[connection signal="pressed" from="Button" to="." method="on_button_pressed"]
