@@ -10,6 +10,18 @@ config_version=5
 
 [application]
 
-config/name="gmtk-2024"
+config/name="My Little Robot"
+config/version="0.0.1"
+run/main_scene="res://src/menu/root_menu.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=960
+window/size/viewport_height=540
+window/stretch/mode="canvas_items"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
