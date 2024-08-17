@@ -41,8 +41,6 @@ func _ready() -> void:
 		if len(wires.get_used_cells_by_id(0, Vector2i(0, color + 1), 0)) > 0:
 			unconnected_colors.append(color)
 
-	pass
-
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
