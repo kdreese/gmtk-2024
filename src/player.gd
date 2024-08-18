@@ -17,7 +17,6 @@ extends CharacterBody2D
 @export var LANDING_JUMP_BUFFER_TIME = 0.05
 
 
-@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 var facing_dir := 1
 
 # Jump variables
@@ -32,6 +31,8 @@ var time_since_stored_jump_attempted := 0.0
 @export var unlocked_dash := false
 var is_dashing := false
 var dash_time := 0.0
+
+@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
 
 func _ready() -> void:
