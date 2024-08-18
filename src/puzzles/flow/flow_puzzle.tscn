@@ -13,11 +13,14 @@ puzzle_to_load = ExtResource("2_5cq3e")
 [node name="PlaceSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_1otxy")
 volume_db = -8.01
+bus = &"Sound"
 
 [node name="WrongSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_t45ss")
 volume_db = -7.495
+bus = &"Sound"
 
 [node name="CompleteSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_8jgm7")
 volume_db = -5.126
+bus = &"Sound"
