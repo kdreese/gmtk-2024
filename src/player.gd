@@ -151,7 +151,6 @@ func was_on_floor() -> bool:
 
 
 func on_animation_changed():
-	print("Changed!")
 	if $AnimatedSprite2D.animation == "walk":
 		play_step_sound()
 		$StepTimer.start()
