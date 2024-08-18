@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://83uawfodwefy"]
+[gd_scene load_steps=9 format=4 uid="uid://bby4nosfqqn8o"]
 
 [ext_resource type="Script" path="res://src/levels/level_1.gd" id="1_0p52p"]
 [ext_resource type="PackedScene" uid="uid://ci6qp1vskqf4r" path="res://src/puzzles/flow/flow_puzzle_1.tscn" id="2_byl51"]
@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://5t5rtqxp61dy" path="res://src/game/player.tscn" id="4_obqjr"]
 [ext_resource type="PackedScene" uid="uid://cg0hj1r053cvc" path="res://src/game/terminal.tscn" id="5_on78q"]
 [ext_resource type="PackedScene" uid="uid://dqh0ukryq2dra" path="res://src/game/door.tscn" id="6_me2q3"]
-[ext_resource type="PackedScene" uid="uid://pxn4070gykuf" path="res://src/puzzles/puzzle_console.tscn" id="6_xshj0"]
+[ext_resource type="PackedScene" path="res://src/puzzles/puzzle_console.tscn" id="6_xshj0"]
 
 [node name="Level1" type="Node2D"]
 script = ExtResource("1_0p52p")

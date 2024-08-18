@@ -20,11 +20,18 @@ script = ExtResource("1_21smu")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -12)
 sprite_frames = ExtResource("2_63n2m")
-animation = &"walk"
+animation = &"idle"
+flip_h = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="StandingCollisionShape" type="CollisionShape2D" parent="."]
 position = Vector2(0, -12)
 shape = SubResource("CapsuleShape2D_6takb")
+
+[node name="DashingCollisionShape" type="CollisionShape2D" parent="."]
+position = Vector2(0, -12)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_6takb")
+disabled = true
 
 [node name="Audio" type="Node" parent="."]
 
