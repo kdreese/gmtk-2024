@@ -10,12 +10,14 @@ extends CharacterBody2D
 @export var MAX_TURN_SPEED = 1500.0
 @export var MAX_AIR_TURN_SPEED = 1200.0
 @export var MAX_DASH_ACCELERATION = 4000.0
-@export var MAX_DASH_DECELERATION = 4000.0
-@export var MAX_DASH_TIME = 0.1
+@export var MAX_DASH_DECELERATION = 3800.0
+@export var MAX_DASH_TIME = 0.2
 @export var JUMP_VELOCITY = -300.0
 @export var COYOTE_TIME_LIMIT = 0.2
 @export var LANDING_JUMP_BUFFER_TIME = 0.05
 
+
+var facing_dir := 1
 
 # Jump variables
 @export var unlocked_double_jump := false
@@ -79,12 +81,14 @@ func _physics_process(delta: float) -> void:
 
 	# Get the input direction and handle the movement/deceleration.
 	var direction := Input.get_axis("move_left", "move_right")
+	if sign(direction) != 0:
+		facing_dir = sign(direction)
 	if is_dashing:
 		dash_time += delta
 		if dash_time < MAX_DASH_TIME:
-			velocity.x = move_toward(velocity.x, direction * DASH_SPEED, MAX_DASH_ACCELERATION)
+			velocity.x = move_toward(velocity.x, facing_dir * DASH_SPEED, MAX_DASH_ACCELERATION)
 		elif absf(velocity.x) > absf(direction) * SPEED:
-			velocity.x = move_toward(velocity.x, direction * DASH_SPEED, MAX_DASH_DECELERATION)
+			velocity.x = move_toward(velocity.x, direction * SPEED, MAX_DASH_DECELERATION)
 		else:
 			is_dashing = false
 			dash_time = 0
@@ -106,7 +110,4 @@ func jump() -> void:
 
 
 func was_on_floor() -> bool:
-	if not is_on_floor() and time_since_was_on_floor <= COYOTE_TIME_LIMIT:
-		return true
-	else:
-		return false
+	return not is_on_floor() and time_since_was_on_floor <= COYOTE_TIME_LIMIT
