@@ -70,6 +70,4 @@ shape = SubResource("RectangleShape2D_3q8a4")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_vb2s5")
-animation = &"open"
-frame = 4
-frame_progress = 1.0
+autoplay = "default"
