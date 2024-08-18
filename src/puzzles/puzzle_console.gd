@@ -20,5 +20,4 @@ func reset_puzzle() -> void:
 
 
 func on_puzzle_complete():
-	print("Puzzle complete!")
 	puzzle_complete.emit()
