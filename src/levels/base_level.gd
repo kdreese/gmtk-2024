@@ -20,17 +20,4 @@ func _ready() -> void:
 	camera.position_smoothing_enabled = true
 	camera.position_smoothing_speed = 10.0
 
-	$Terminal.interacted.connect(show_puzzle)
-	$PuzzleConsole.puzzle_complete.connect(puzzle_completed)
-
 	player.add_child(camera)
-
-
-func show_puzzle() -> void:
-	$PuzzleConsole.show()
-	$PuzzleConsole.load_puzzle(preload("res://src/puzzles/flow/flow_puzzle_1.tscn"))
-
-
-func puzzle_completed() -> void:
-	$PuzzleConsole.hide()
-	$Door.open()
