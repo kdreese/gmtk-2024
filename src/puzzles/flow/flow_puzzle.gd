@@ -127,6 +127,9 @@ func mouse_entered_tile(curr: Vector2i, prev: Vector2i) -> void:
 		var result := get_vertex_tile_params(-direction, false)
 		wires.set_cell(curr, 0, Vector2i(result[0], color_to_place + 1), result[1])
 
+	if not connecting_to_tile:
+		$PlaceSound.play()
+
 
 func get_edge_directions(atlas_coords: Vector2i, alternative_tile: int) -> Array[Vector2i]:
 	if atlas_coords.x == 3:
@@ -261,6 +264,7 @@ func check_if_connected() -> void:
 						tiles_to_search.append(new_tile)
 			elif atlas_coords.x == 1:
 				# We got to the other node.
+				$CompleteSound.play()
 				color_connected.emit(color)
 				colors_to_remove.append(color)
 

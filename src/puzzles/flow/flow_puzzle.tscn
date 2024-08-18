@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=4 uid="uid://bajjv77iyk4qa"]
+[gd_scene load_steps=10 format=4 uid="uid://bajjv77iyk4qa"]
 
 [ext_resource type="Script" path="res://src/puzzles/flow/flow_puzzle.gd" id="1_n2dmh"]
 [ext_resource type="Texture2D" uid="uid://bgy4iri3nyqd0" path="res://assets/flow_background.png" id="1_qk10n"]
 [ext_resource type="Texture2D" uid="uid://emiyt6nhfi3u" path="res://assets/flow_tileset.png" id="2_s6gpe"]
+[ext_resource type="AudioStream" uid="uid://bdelmtnx6xkdv" path="res://assets/sounds/flow_place.wav" id="4_1otxy"]
+[ext_resource type="AudioStream" uid="uid://cgvek1qqhhft1" path="res://assets/sounds/flow_complete.wav" id="5_8jgm7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_25dwc"]
 texture = ExtResource("1_qk10n")
@@ -60,3 +62,11 @@ unique_name_in_owner = true
 scale = Vector2(4, 4)
 tile_map_data = PackedByteArray("AAABAAEAAAABAAEAAFAGAAYAAAAAAAEAAAABAAYAAAAAAAQAAAAGAAEAAAAAAAQAAAACAAIAAAAAAAIAAAAFAAUAAAAAAAIAAAABAAIAAAADAAEAAFAAAAIAAAADAAEAAGAAAAMAAAAEAAEAAFAAAAQAAAAEAAEAAFAAAAUAAAAEAAEAAFAAAAYAAAAEAAEAAFAAAAcAAAADAAEAADABAAcAAAACAAEAAAA=")
 tile_set = SubResource("TileSet_48p5p")
+
+[node name="PlaceSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_1otxy")
+volume_db = -8.01
+
+[node name="CompleteSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_8jgm7")
+volume_db = -7.0
