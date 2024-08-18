@@ -48,6 +48,9 @@ func _ready() -> void:
 
 func reset() -> void:
 	%Wires.tile_map_data = reset_state
+	for color in [PURPLE, RED, GREEN, YELLOW, BLUE]:
+		if len(wires.get_used_cells_by_id(0, Vector2i(0, color), 0)) > 0:
+			unconnected_colors.append(color)
 
 
 func _input(event: InputEvent) -> void:
@@ -276,6 +279,7 @@ func check_if_connected() -> void:
 			elif atlas_coords.x == 1:
 				# We got to the other node.
 				$CompleteSound.play()
+				print("Completed ", color)
 				color_connected.emit(color)
 				colors_to_remove.append(color)
 
