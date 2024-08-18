@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://5t5rtqxp61dy"]
+[gd_scene load_steps=4 format=3 uid="uid://5t5rtqxp61dy"]
 
 [ext_resource type="Script" path="res://src/player.gd" id="1_21smu"]
 [ext_resource type="SpriteFrames" uid="uid://ce8sxgysi15q5" path="res://assets/characters/player/player_sprite_frames.tres" id="2_63n2m"]
-[ext_resource type="Texture2D" uid="uid://bvra8g65t6q22" path="res://assets/characters/player/robot_idle_01.png" id="3_n3a83"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6takb"]
 radius = 8.0
@@ -13,11 +12,7 @@ script = ExtResource("1_21smu")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_63n2m")
-animation = &"idle"
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-4, 0)
-texture = ExtResource("3_n3a83")
+animation = &"jump_ascending"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_6takb")

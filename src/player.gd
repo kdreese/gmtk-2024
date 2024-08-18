@@ -32,6 +32,14 @@ var time_since_stored_jump_attempted := 0.0
 var is_dashing := false
 var dash_time := 0.0
 
+@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+
+
+func _ready() -> void:
+	animated_sprite_2d.play("idle")
+	if facing_dir == 1:
+		animated_sprite_2d.flip_h = true
+
 
 func _physics_process(delta: float) -> void:
 	var acceleration: float
@@ -49,7 +57,11 @@ func _physics_process(delta: float) -> void:
 		turn_speed = MAX_AIR_TURN_SPEED
 		if stored_jump_attempt:
 			time_since_stored_jump_attempted += delta
+		if sign(velocity.y) == 1:
+			animated_sprite_2d.play("jump_descending")
 	else:
+		if animated_sprite_2d.animation == "jump_descending":
+			animated_sprite_2d.stop()
 		time_since_was_on_floor = 0.0
 		has_used_grounded_jump = false
 		has_used_aerial_jump = false
@@ -78,11 +90,13 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("dash") and unlocked_dash:
 		is_dashing = true
 		velocity = Vector2.ZERO
+		animated_sprite_2d.play("dash")
 
 	# Get the input direction and handle the movement/deceleration.
 	var direction := Input.get_axis("move_left", "move_right")
 	if sign(direction) != 0:
 		facing_dir = sign(direction)
+	animated_sprite_2d.flip_h = facing_dir == 1
 	if is_dashing:
 		dash_time += delta
 		if dash_time < MAX_DASH_TIME:
@@ -92,6 +106,7 @@ func _physics_process(delta: float) -> void:
 		else:
 			is_dashing = false
 			dash_time = 0
+			animated_sprite_2d.play("dash_end")
 	else:
 		if direction != 0:
 			if signf(direction) != signf(velocity.x):
@@ -99,14 +114,19 @@ func _physics_process(delta: float) -> void:
 			else:
 				max_speed_change = acceleration * delta
 		else:
-				max_speed_change = deceleration * delta
+			max_speed_change = deceleration * delta
 		velocity.x = move_toward(velocity.x, direction * SPEED, max_speed_change)
+		if velocity == Vector2.ZERO:
+			animated_sprite_2d.play("idle")
+		elif not animated_sprite_2d.is_playing() or animated_sprite_2d.animation == "idle":
+			animated_sprite_2d.play("walk")
 
 	move_and_slide()
 
 
 func jump() -> void:
 	velocity.y = JUMP_VELOCITY
+	animated_sprite_2d.play("jump_ascending")
 
 
 func was_on_floor() -> bool:
