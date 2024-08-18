@@ -3,6 +3,7 @@ extends Puzzle
 ## Possible colors.
 enum {
 	INVALID = -1,
+	PURPLE,
 	RED,
 	GREEN,
 	BLUE,
@@ -30,6 +31,8 @@ var color_to_place: int = INVALID
 
 var unconnected_colors: Array[int]
 
+## The state of the wire tilemap upon reset.
+var reset_state: PackedByteArray
 
 @onready var background: TileMapLayer = %Background
 @onready var wires: TileMapLayer = %Wires
@@ -37,9 +40,14 @@ var unconnected_colors: Array[int]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	for color in [RED, GREEN, YELLOW, BLUE]:
-		if len(wires.get_used_cells_by_id(0, Vector2i(0, color + 1), 0)) > 0:
+	reset_state = %Wires.tile_map_data
+	for color in [PURPLE, RED, GREEN, YELLOW, BLUE]:
+		if len(wires.get_used_cells_by_id(0, Vector2i(0, color), 0)) > 0:
 			unconnected_colors.append(color)
+
+
+func reset() -> void:
+	%Wires.tile_map_data = reset_state
 
 
 func _input(event: InputEvent) -> void:
@@ -67,7 +75,7 @@ func _input(event: InputEvent) -> void:
 			else:
 				var atlas_coords := wires.get_cell_atlas_coords(grid_coords)
 				if atlas_coords.x in [0, 2]:
-					color_to_place = atlas_coords.y - 1
+					color_to_place = atlas_coords.y
 				else:
 					color_to_place = INVALID
 
@@ -85,6 +93,7 @@ func mouse_entered_tile(curr: Vector2i, prev: Vector2i) -> void:
 
 	var is_impassable := (background.get_cell_atlas_coords(curr) == Vector2i(1,0))
 	if is_impassable:
+		$WrongSound.play()
 		color_to_place = INVALID
 		return
 
@@ -92,40 +101,45 @@ func mouse_entered_tile(curr: Vector2i, prev: Vector2i) -> void:
 	var cur_source_id := wires.get_cell_source_id(curr)
 	if cur_source_id == 0:
 		var atlas_coords := wires.get_cell_atlas_coords(curr)
-		if atlas_coords in [Vector2i(0, color_to_place + 1), Vector2i(2, color_to_place + 1)]:
+		if atlas_coords in [Vector2i(0, color_to_place), Vector2i(2, color_to_place)]:
 			connecting_to_tile = true
 		else:
+			$WrongSound.play()
 			color_to_place = INVALID
 			return
 
 	var prev_atlas_coords := wires.get_cell_atlas_coords(prev)
 	if prev_atlas_coords.x == 0:
 		var result := get_vertex_tile_params(direction, true)
-		wires.set_cell(prev, 0, Vector2i(result[0], color_to_place + 1), result[1])
+		wires.set_cell(prev, 0, Vector2i(result[0], color_to_place), result[1])
 	elif prev_atlas_coords.x == 2:
 		var alt_tile := wires.get_cell_alternative_tile(prev)
 		var direction_2 := get_vertex_direction(alt_tile, false)
 		var result := get_edge_tile_params(direction, direction_2)
-		wires.set_cell(prev, 0, Vector2i(result[0], color_to_place + 1), result[1])
+		wires.set_cell(prev, 0, Vector2i(result[0], color_to_place), result[1])
 
 	# Previous atlas coords were checked when we clicked.
 	if connecting_to_tile:
 		var cur_atlas_coords := wires.get_cell_atlas_coords(curr)
-		if cur_atlas_coords not in [Vector2i(0, color_to_place + 1), Vector2i(2, color_to_place + 1)]:
+		if cur_atlas_coords not in [Vector2i(0, color_to_place), Vector2i(2, color_to_place)]:
+			$WrongSound.play()
 			color_to_place = INVALID
 			return
 		if cur_atlas_coords.x == 0:
 			var result := get_vertex_tile_params(-direction, true)
-			wires.set_cell(curr, 0, Vector2i(result[0], color_to_place + 1), result[1])
+			wires.set_cell(curr, 0, Vector2i(result[0], color_to_place), result[1])
 			color_to_place = INVALID
 		else:
 			var alt_tile := wires.get_cell_alternative_tile(curr)
 			var direction_2 := get_vertex_direction(alt_tile, false)
 			var result := get_edge_tile_params(-direction, direction_2)
-			wires.set_cell(curr, 0, Vector2i(result[0], color_to_place + 1), result[1])
+			wires.set_cell(curr, 0, Vector2i(result[0], color_to_place), result[1])
 	else:
 		var result := get_vertex_tile_params(-direction, false)
-		wires.set_cell(curr, 0, Vector2i(result[0], color_to_place + 1), result[1])
+		wires.set_cell(curr, 0, Vector2i(result[0], color_to_place), result[1])
+
+	if not connecting_to_tile:
+		$PlaceSound.play()
 
 
 func get_edge_directions(atlas_coords: Vector2i, alternative_tile: int) -> Array[Vector2i]:
@@ -239,7 +253,7 @@ func check_if_connected() -> void:
 	var colors_to_remove = []
 	for color in unconnected_colors:
 		# Only check connected nodes.
-		var starting_nodes := wires.get_used_cells_by_id(0, Vector2i(1, color + 1))
+		var starting_nodes := wires.get_used_cells_by_id(0, Vector2i(1, color))
 		if len(starting_nodes) == 0:
 			continue
 
@@ -261,6 +275,7 @@ func check_if_connected() -> void:
 						tiles_to_search.append(new_tile)
 			elif atlas_coords.x == 1:
 				# We got to the other node.
+				$CompleteSound.play()
 				color_connected.emit(color)
 				colors_to_remove.append(color)
 
