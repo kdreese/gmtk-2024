@@ -279,7 +279,6 @@ func check_if_connected() -> void:
 			elif atlas_coords.x == 1:
 				# We got to the other node.
 				$CompleteSound.play()
-				print("Completed ", color)
 				color_connected.emit(color)
 				colors_to_remove.append(color)
 
