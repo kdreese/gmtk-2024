@@ -17,7 +17,6 @@ func _ready() -> void:
 	camera.limit_top = camera_bounds.position.y * 16
 	camera.limit_right = camera_bounds.end.x * 16
 	camera.limit_bottom = camera_bounds.end.y * 16
-	#camera.limit_smoothed = true
 	camera.position_smoothing_enabled = true
 	camera.position_smoothing_speed = 10.0
 

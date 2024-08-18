@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=4 uid="uid://dt0d46dsg8c1f"]
+[gd_scene load_steps=6 format=4 uid="uid://dt0d46dsg8c1f"]
 
 [ext_resource type="Script" path="res://src/levels/base_level.gd" id="1_ln4j1"]
 [ext_resource type="TileSet" uid="uid://prouykjdur4o" path="res://resources/tilesets/tileset_01.tres" id="2_kux3c"]
 [ext_resource type="TileSet" uid="uid://bth3qospiuewq" path="res://resources/tilesets/tileset_02.tres" id="3_mka6j"]
 [ext_resource type="PackedScene" uid="uid://5t5rtqxp61dy" path="res://src/game/player.tscn" id="4_obqjr"]
+[ext_resource type="PackedScene" uid="uid://cg0hj1r053cvc" path="res://src/game/terminal.tscn" id="5_on78q"]
 
 [node name="Level1" type="Node2D"]
 script = ExtResource("1_ln4j1")
@@ -19,4 +20,7 @@ tile_set = ExtResource("2_kux3c")
 tile_set = ExtResource("3_mka6j")
 
 [node name="Player" parent="." instance=ExtResource("4_obqjr")]
-position = Vector2(64, -44)
+position = Vector2(64, -32)
+
+[node name="Terminal" parent="." instance=ExtResource("5_on78q")]
+position = Vector2(240, -80)

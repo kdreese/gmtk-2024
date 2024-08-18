@@ -13,13 +13,17 @@ radius = 8.0
 height = 24.0
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
+z_index = 10
+collision_layer = 2
 script = ExtResource("1_21smu")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -12)
 sprite_frames = ExtResource("2_63n2m")
 animation = &"walk"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -12)
 shape = SubResource("CapsuleShape2D_6takb")
 
 [node name="Audio" type="Node" parent="."]
