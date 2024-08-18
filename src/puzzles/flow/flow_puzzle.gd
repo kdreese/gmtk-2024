@@ -41,13 +41,14 @@ var reset_state: PackedByteArray
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	reset_state = %Wires.tile_map_data
-	for color in [PURPLE, RED, GREEN, YELLOW, BLUE]:
-		if len(wires.get_used_cells_by_id(0, Vector2i(0, color), 0)) > 0:
-			unconnected_colors.append(color)
+	reset()
 
 
 func reset() -> void:
 	%Wires.tile_map_data = reset_state
+	for color in [PURPLE, RED, GREEN, YELLOW, BLUE]:
+		if len(wires.get_used_cells_by_id(0, Vector2i(0, color), 0)) > 0:
+			unconnected_colors.append(color)
 
 
 func _input(event: InputEvent) -> void:
