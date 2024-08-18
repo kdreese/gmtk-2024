@@ -150,7 +150,7 @@ func was_on_floor() -> bool:
 	return not is_on_floor() and time_since_was_on_floor <= COYOTE_TIME_LIMIT
 
 
-func on_animation_changed():
+func on_animation_changed() -> void:
 	if $AnimatedSprite2D.animation == "walk":
 		play_step_sound()
 		$StepTimer.start()
@@ -158,6 +158,6 @@ func on_animation_changed():
 		$StepTimer.stop()
 
 
-func play_step_sound():
+func play_step_sound() -> void:
 	var stream := $Audio/Steps.get_children().pick_random() as AudioStreamPlayer
 	stream.play()
