@@ -11,10 +11,12 @@ func _ready() -> void:
 
 
 func show_puzzle() -> void:
+	$Player.freeze()
 	$PuzzleConsole.show()
 	$PuzzleConsole.load_puzzle(puzzle)
 
 
 func puzzle_completed() -> void:
+	$Player.unfreeze()
 	$PuzzleConsole.hide()
 	$Door.open()
