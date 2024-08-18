@@ -30,23 +30,28 @@ shape = SubResource("CapsuleShape2D_6takb")
 
 [node name="Jump" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("3_47665")
+bus = &"Sound"
 
 [node name="Dash" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("4_h3ksm")
+bus = &"Sound"
 
 [node name="Steps" type="Node" parent="Audio"]
 
 [node name="Step1" type="AudioStreamPlayer" parent="Audio/Steps"]
 stream = ExtResource("5_248jy")
 max_polyphony = 5
+bus = &"Sound"
 
 [node name="Step2" type="AudioStreamPlayer" parent="Audio/Steps"]
 stream = ExtResource("6_h4xha")
 max_polyphony = 5
+bus = &"Sound"
 
 [node name="Step3" type="AudioStreamPlayer" parent="Audio/Steps"]
 stream = ExtResource("7_t5l3s")
 max_polyphony = 5
+bus = &"Sound"
 
 [node name="StepTimer" type="Timer" parent="."]
 wait_time = 0.25

@@ -1,11 +1,7 @@
-[gd_scene load_steps=11 format=4 uid="uid://bcl1lusbg81uu"]
+[gd_scene load_steps=7 format=4 uid="uid://bdg4573whgdn6"]
 
-[ext_resource type="Script" path="res://src/puzzles/flow/flow_puzzle.gd" id="1_vdqx6"]
 [ext_resource type="Texture2D" uid="uid://bgy4iri3nyqd0" path="res://assets/flow_background.png" id="2_x402y"]
 [ext_resource type="Texture2D" uid="uid://emiyt6nhfi3u" path="res://assets/flow_tileset.png" id="3_ggabm"]
-[ext_resource type="AudioStream" uid="uid://bdelmtnx6xkdv" path="res://assets/sounds/flow_place.wav" id="4_mwoua"]
-[ext_resource type="AudioStream" uid="uid://defk6mw8euh26" path="res://assets/sounds/flow_wrong.wav" id="5_a8de1"]
-[ext_resource type="AudioStream" uid="uid://cgvek1qqhhft1" path="res://assets/sounds/flow_complete.wav" id="6_l02d7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_25dwc"]
 texture = ExtResource("2_x402y")
@@ -46,39 +42,17 @@ texture = ExtResource("3_ggabm")
 [sub_resource type="TileSet" id="TileSet_48p5p"]
 sources/0 = SubResource("TileSetAtlasSource_kmbxy")
 
-[node name="FlowPuzzle2" type="Node2D"]
-script = ExtResource("1_vdqx6")
-
-[node name="TileMap" type="Node2D" parent="."]
+[node name="FlowPuzzle7" type="Node2D"]
 position = Vector2(50, 50)
 
-[node name="Background" type="TileMapLayer" parent="TileMap"]
+[node name="Background" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
 scale = Vector2(4, 4)
 tile_map_data = PackedByteArray("AAAAAAAAAAABAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAUAAAABAAAAAAAAAAYAAAABAAAAAAAAAAcAAAABAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAABAAAAAAAEAAAAAAABAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAABAAAAAAAHAAAAAAABAAAAAAAHAAcAAAABAAAAAAAHAAYAAAAAAAAAAAAHAAUAAAAAAAAAAAAHAAQAAAAAAAAAAAAHAAMAAAAAAAAAAAAHAAIAAAABAAAAAAAHAAEAAAABAAAAAAAGAAEAAAABAAAAAAAFAAEAAAAAAAAAAAAEAAEAAAABAAAAAAADAAEAAAABAAAAAAACAAEAAAAAAAAAAAABAAEAAAABAAAAAAABAAIAAAAAAAAAAAACAAIAAAAAAAAAAAADAAIAAAAAAAAAAAAEAAIAAAAAAAAAAAAFAAIAAAAAAAAAAAAGAAIAAAAAAAAAAAAGAAMAAAAAAAAAAAAFAAMAAAAAAAAAAAAEAAMAAAAAAAAAAAADAAMAAAABAAAAAAACAAMAAAAAAAAAAAABAAMAAAAAAAAAAAABAAQAAAAAAAAAAAACAAQAAAAAAAAAAAADAAQAAAAAAAAAAAAEAAQAAAABAAAAAAAFAAQAAAAAAAAAAAAGAAQAAAAAAAAAAAAGAAUAAAAAAAAAAAAFAAUAAAAAAAAAAAAFAAYAAAAAAAAAAAAEAAYAAAABAAAAAAADAAUAAAAAAAAAAAACAAUAAAAAAAAAAAABAAUAAAAAAAAAAAABAAYAAAABAAAAAAACAAYAAAAAAAAAAAADAAYAAAABAAAAAAAGAAYAAAABAAAAAAAGAAcAAAAAAAAAAAAFAAcAAAAAAAAAAAAEAAcAAAABAAAAAAADAAcAAAABAAAAAAACAAcAAAAAAAAAAAABAAcAAAABAAAAAAAEAAUAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_alhje")
 
-[node name="Wires" type="TileMapLayer" parent="TileMap"]
+[node name="Wires" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
 scale = Vector2(4, 4)
 tile_map_data = PackedByteArray("AAAGAAcAAAAAAAAAAAAFAAAAAAAAAAIAAAAGAAUAAAAAAAIAAAABAAAAAAAAAAAAAAAAAAEAAAAAAAMAAAAEAAUAAAAAAAMAAAACAAcAAAAAAAQAAAAAAAMAAAAAAAQAAAAHAAYAAAAAAAEAAAAHAAMAAAAAAAEAAAA=")
 tile_set = SubResource("TileSet_48p5p")
-
-[node name="PlaceSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_mwoua")
-volume_db = -8.01
-
-[node name="WrongSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_a8de1")
-volume_db = -7.495
-
-[node name="CompleteSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_l02d7")
-volume_db = -5.126
-
-[node name="Button" type="Button" parent="."]
-offset_left = 868.0
-offset_top = 318.0
-offset_right = 972.0
-offset_bottom = 349.0
-text = "Reset Puzzle"
