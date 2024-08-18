@@ -82,3 +82,5 @@ offset_top = 318.0
 offset_right = 972.0
 offset_bottom = 349.0
 text = "Reset Puzzle"
+
+[connection signal="pressed" from="Button" to="." method="reset"]

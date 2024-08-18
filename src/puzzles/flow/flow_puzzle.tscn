@@ -46,7 +46,7 @@ texture = ExtResource("2_s6gpe")
 [sub_resource type="TileSet" id="TileSet_48p5p"]
 sources/0 = SubResource("TileSetAtlasSource_kmbxy")
 
-[node name="FlowPuzzle" type="Node2D"]
+[node name="FlowPuzzle2" type="Node2D"]
 script = ExtResource("1_n2dmh")
 
 [node name="TileMap" type="Node2D" parent="."]
