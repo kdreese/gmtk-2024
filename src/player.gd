@@ -50,7 +50,7 @@ func _physics_process(delta: float) -> void:
 	var deceleration: float
 	var turn_speed: float
 	var max_speed_change: float
-	
+
 	# Add the gravity.
 	if not is_on_floor():
 		if not is_dashing:
@@ -65,6 +65,7 @@ func _physics_process(delta: float) -> void:
 			animated_sprite_2d.play("jump_descending")
 	else:
 		if animated_sprite_2d.animation == "jump_descending":
+			play_step_sound()
 			animated_sprite_2d.stop()
 		time_since_was_on_floor = 0.0
 		has_used_grounded_jump = false
@@ -77,7 +78,7 @@ func _physics_process(delta: float) -> void:
 			jump()
 		stored_jump_attempt = false
 		time_since_stored_jump_attempted = 0.0
-	
+
 	if is_dash_on_cooldown:
 		dash_cooldown_timer += delta
 		if dash_cooldown_timer >= DASH_COOLDOWN:
@@ -101,6 +102,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("dash") and unlocked_dash and not is_dash_on_cooldown and (is_on_floor() or not has_used_aerial_dash):
 		is_dashing = true
 		velocity = Vector2.ZERO
+		$Audio/Dash.play()
 		animated_sprite_2d.play("dash")
 		if not is_on_floor():
 			has_used_aerial_dash = true
@@ -141,7 +143,21 @@ func _physics_process(delta: float) -> void:
 func jump() -> void:
 	velocity.y = JUMP_VELOCITY
 	animated_sprite_2d.play("jump_ascending")
+	$Audio/Jump.play()
 
 
 func was_on_floor() -> bool:
 	return not is_on_floor() and time_since_was_on_floor <= COYOTE_TIME_LIMIT
+
+
+func on_animation_changed() -> void:
+	if $AnimatedSprite2D.animation == "walk":
+		play_step_sound()
+		$StepTimer.start()
+	else:
+		$StepTimer.stop()
+
+
+func play_step_sound() -> void:
+	var stream := $Audio/Steps.get_children().pick_random() as AudioStreamPlayer
+	stream.play()
