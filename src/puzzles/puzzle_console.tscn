@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://pxn4070gykuf"]
+
+[ext_resource type="Script" path="res://src/puzzles/puzzle_console.gd" id="1_1ccsu"]
+[ext_resource type="PackedScene" uid="uid://bajjv77iyk4qa" path="res://src/puzzles/flow/flow_puzzle.tscn" id="2_jtsje"]
+
+[node name="PuzzleConsole" type="CanvasLayer"]
+script = ExtResource("1_1ccsu")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.623529)
+
+[node name="Button" type="Button" parent="."]
+offset_left = 963.0
+offset_top = 331.0
+offset_right = 1067.0
+offset_bottom = 362.0
+text = "Reset Puzzle
+"
+
+[node name="FlowPuzzle" parent="." instance=ExtResource("2_jtsje")]
+
+[connection signal="pressed" from="Button" to="." method="reset_puzzle"]
+[connection signal="puzzle_complete" from="FlowPuzzle" to="." method="on_puzzle_complete"]

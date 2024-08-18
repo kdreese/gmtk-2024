@@ -7,11 +7,11 @@ signal interacted()
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 
 
-func _on_body_entered(body: Node2D) -> void:
+func _on_body_entered(_body: Node2D) -> void:
 	interact_label.show()
 
 
-func _on_body_exited(body: Node2D) -> void:
+func _on_body_exited(_body: Node2D) -> void:
 	interact_label.hide()
 
 

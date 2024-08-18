@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://b48muildj3j4v"]
+[gd_scene load_steps=6 format=3 uid="uid://bajjv77iyk4qa"]
 
 [ext_resource type="Script" path="res://src/puzzles/flow/flow_puzzle.gd" id="1_n2dmh"]
-[ext_resource type="PackedScene" uid="uid://dqxhmqnk3ndvy" path="res://src/puzzles/flow/flow_puzzle_4.tscn" id="2_5cq3e"]
+[ext_resource type="PackedScene" uid="uid://q6lobq1gs4av" path="res://src/puzzles/flow/flow_puzzle_4.tscn" id="2_5cq3e"]
 [ext_resource type="AudioStream" uid="uid://bdelmtnx6xkdv" path="res://assets/sounds/flow_place.wav" id="4_1otxy"]
 [ext_resource type="AudioStream" uid="uid://cgvek1qqhhft1" path="res://assets/sounds/flow_complete.wav" id="5_8jgm7"]
 [ext_resource type="AudioStream" uid="uid://defk6mw8euh26" path="res://assets/sounds/flow_wrong.wav" id="5_t45ss"]
@@ -24,12 +24,3 @@ bus = &"Sound"
 stream = ExtResource("5_8jgm7")
 volume_db = -5.126
 bus = &"Sound"
-
-[node name="Button" type="Button" parent="."]
-offset_left = 868.0
-offset_top = 318.0
-offset_right = 972.0
-offset_bottom = 349.0
-text = "Reset Puzzle"
-
-[connection signal="pressed" from="Button" to="." method="reset"]
