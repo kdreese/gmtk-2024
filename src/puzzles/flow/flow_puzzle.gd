@@ -24,6 +24,8 @@ const ROTATION_FLAGS = [
 ## Emitted when a color is connected to its node.
 signal color_connected(color: int)
 
+@export var puzzle_to_load: PackedScene
+
 ## The tile currently underneath the cursor.
 var mouseover_tile: Vector2i = Vector2i(0,0)
 
@@ -34,18 +36,22 @@ var unconnected_colors: Array[int]
 ## The state of the wire tilemap upon reset.
 var reset_state: PackedByteArray
 
-@onready var background: TileMapLayer = %Background
-@onready var wires: TileMapLayer = %Wires
+var background: TileMapLayer
+var wires: TileMapLayer
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	reset_state = %Wires.tile_map_data
+	var puzzle := puzzle_to_load.instantiate()
+	background = puzzle.get_node("Background")
+	wires = puzzle.get_node("Wires")
+	reset_state = wires.tile_map_data
+	add_child(puzzle)
 	reset()
 
 
 func reset() -> void:
-	%Wires.tile_map_data = reset_state
+	wires.tile_map_data = reset_state
 	for color in [PURPLE, RED, GREEN, YELLOW, BLUE]:
 		if len(wires.get_used_cells_by_id(0, Vector2i(0, color), 0)) > 0:
 			unconnected_colors.append(color)
