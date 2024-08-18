@@ -47,7 +47,6 @@ func _ready() -> void:
 
 
 func reset() -> void:
-	print("Resetting!")
 	%Wires.tile_map_data = reset_state
 
 
