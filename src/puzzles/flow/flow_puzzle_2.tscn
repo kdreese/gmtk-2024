@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=4 uid="uid://diiqnlpxye0r6"]
+[gd_scene load_steps=7 format=4 uid="uid://cy1v14n8ap7q8"]
 
 [ext_resource type="Texture2D" uid="uid://bgy4iri3nyqd0" path="res://assets/flow_background.png" id="2_mpayp"]
 [ext_resource type="Texture2D" uid="uid://emiyt6nhfi3u" path="res://assets/flow_tileset.png" id="3_rhase"]
@@ -43,7 +43,6 @@ texture = ExtResource("3_rhase")
 sources/0 = SubResource("TileSetAtlasSource_kmbxy")
 
 [node name="FlowPuzzle2" type="Node2D"]
-position = Vector2(50, 50)
 
 [node name="Background" type="TileMapLayer" parent="."]
 unique_name_in_owner = true

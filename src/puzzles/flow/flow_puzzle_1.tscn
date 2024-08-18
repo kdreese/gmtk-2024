@@ -43,7 +43,6 @@ texture = ExtResource("3_egexo")
 sources/0 = SubResource("TileSetAtlasSource_kmbxy")
 
 [node name="FlowPuzzle1" type="Node2D"]
-position = Vector2(50, 50)
 
 [node name="Background" type="TileMapLayer" parent="."]
 unique_name_in_owner = true

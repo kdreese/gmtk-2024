@@ -26,8 +26,12 @@ signal color_connected(color: int)
 
 @export var puzzle_to_load: PackedScene
 
+var puzzle: Node2D
+
 ## The tile currently underneath the cursor.
 var mouseover_tile: Vector2i = Vector2i(0,0)
+
+var last_valid_tile: Vector2i = Vector2i(0,0)
 
 var color_to_place: int = INVALID
 
@@ -42,7 +46,15 @@ var wires: TileMapLayer
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var puzzle := puzzle_to_load.instantiate()
+	load_puzzle(puzzle_to_load)
+	reset()
+
+
+func load_puzzle(new_puzzle: PackedScene) -> void:
+	if puzzle != null:
+		remove_child(puzzle)
+		puzzle.queue_free()
+	puzzle = new_puzzle.instantiate() as Node2D
 	background = puzzle.get_node("Background")
 	wires = puzzle.get_node("Wires")
 	reset_state = wires.tile_map_data
@@ -51,6 +63,7 @@ func _ready() -> void:
 
 
 func reset() -> void:
+	unconnected_colors = []
 	wires.tile_map_data = reset_state
 	for color in [PURPLE, RED, GREEN, YELLOW, BLUE]:
 		if len(wires.get_used_cells_by_id(0, Vector2i(0, color), 0)) > 0:
@@ -59,17 +72,16 @@ func reset() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
-		var mouse_pos := get_local_mouse_position()
+		var mouse_pos := get_global_mouse_position()
 		var grid_coords := wires.local_to_map(wires.to_local(mouse_pos))
 		if grid_coords != mouseover_tile and LEVEL_BOUNDS.has_point(grid_coords):
-			mouse_entered_tile(grid_coords, mouseover_tile)
+			mouse_entered_tile(grid_coords)
 			mouseover_tile = grid_coords
 			if len(unconnected_colors) > 0:
 				check_if_connected()
-
 	elif event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
-			var mouse_pos := get_local_mouse_position()
+			var mouse_pos := get_global_mouse_position()
 			var grid_coords := wires.local_to_map(wires.to_local(mouse_pos))
 			if not LEVEL_BOUNDS.has_point(grid_coords):
 				# We're outside the level boundary
@@ -83,25 +95,26 @@ func _input(event: InputEvent) -> void:
 				var atlas_coords := wires.get_cell_atlas_coords(grid_coords)
 				if atlas_coords.x in [0, 2]:
 					color_to_place = atlas_coords.y
+					last_valid_tile = grid_coords
 				else:
 					color_to_place = INVALID
 
 
-func mouse_entered_tile(curr: Vector2i, prev: Vector2i) -> void:
+func mouse_entered_tile(curr: Vector2i) -> void:
 	if color_to_place == -1:
 		return
+
+	var prev := last_valid_tile
 
 	var direction := curr - prev
 
 	if direction not in [Vector2i.LEFT, Vector2i.DOWN, Vector2i.RIGHT, Vector2i.UP]:
 		# We didn't go in a cardinal direction.
-		color_to_place = INVALID
 		return
 
 	var is_impassable := (background.get_cell_atlas_coords(curr) == Vector2i(1,0))
 	if is_impassable:
 		$WrongSound.play()
-		color_to_place = INVALID
 		return
 
 	var connecting_to_tile: bool = false
@@ -112,7 +125,6 @@ func mouse_entered_tile(curr: Vector2i, prev: Vector2i) -> void:
 			connecting_to_tile = true
 		else:
 			$WrongSound.play()
-			color_to_place = INVALID
 			return
 
 	var prev_atlas_coords := wires.get_cell_atlas_coords(prev)
@@ -130,7 +142,6 @@ func mouse_entered_tile(curr: Vector2i, prev: Vector2i) -> void:
 		var cur_atlas_coords := wires.get_cell_atlas_coords(curr)
 		if cur_atlas_coords not in [Vector2i(0, color_to_place), Vector2i(2, color_to_place)]:
 			$WrongSound.play()
-			color_to_place = INVALID
 			return
 		if cur_atlas_coords.x == 0:
 			var result := get_vertex_tile_params(-direction, true)
@@ -141,12 +152,15 @@ func mouse_entered_tile(curr: Vector2i, prev: Vector2i) -> void:
 			var direction_2 := get_vertex_direction(alt_tile, false)
 			var result := get_edge_tile_params(-direction, direction_2)
 			wires.set_cell(curr, 0, Vector2i(result[0], color_to_place), result[1])
+			color_to_place = INVALID
 	else:
 		var result := get_vertex_tile_params(-direction, false)
 		wires.set_cell(curr, 0, Vector2i(result[0], color_to_place), result[1])
 
 	if not connecting_to_tile:
 		$PlaceSound.play()
+
+	last_valid_tile = curr
 
 
 func get_edge_directions(atlas_coords: Vector2i, alternative_tile: int) -> Array[Vector2i]:
