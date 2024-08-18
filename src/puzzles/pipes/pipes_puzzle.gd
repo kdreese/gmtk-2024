@@ -1,5 +1,5 @@
 @tool
-extends Node2D
+extends Puzzle
 
 
 const GRID_DIMENSIONS = Vector2i(8, 8)
@@ -26,7 +26,7 @@ func check_water() -> void:
 			tiles_searched.append(tile_entry)
 
 			if tile_entry[0] in sinks:
-				print("Hooray!")
+				tiles_connected.append(tile_entry[0])
 
 			var pipe := get_pipe_with_position(tile_entry[0])
 			if not pipe:
@@ -45,6 +45,14 @@ func check_water() -> void:
 			pipe.set_filled(true)
 		else:
 			pipe.set_filled(false)
+
+	var sink_unconnected := false
+	for sink in sinks:
+		if sink not in tiles_connected:
+			sink_unconnected = true
+
+	if not sink_unconnected:
+		puzzle_complete.emit()
 
 
 func get_pipe_with_position(pos: Vector2i) -> Pipe:
