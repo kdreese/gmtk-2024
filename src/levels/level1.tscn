@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cg0hj1r053cvc" path="res://src/game/terminal.tscn" id="5_on78q"]
 [ext_resource type="PackedScene" uid="uid://dqh0ukryq2dra" path="res://src/game/door.tscn" id="6_me2q3"]
 [ext_resource type="PackedScene" uid="uid://pxn4070gykuf" path="res://src/puzzles/puzzle_console.tscn" id="6_xshj0"]
-[ext_resource type="PackedScene" uid="uid://bexktds2khmdd" path="res://src/game/level_trigger.tscn" id="11_fv470"]
+[ext_resource type="PackedScene" path="res://src/game/level_trigger.tscn" id="11_fv470"]
 [ext_resource type="PackedScene" uid="uid://h323x6ba1dxm" path="res://src/menu/root_menu.tscn" id="12_3yoxe"]
 
 [node name="Level1" type="Node2D"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://h323x6ba1dxm"]
+[gd_scene load_steps=6 format=3 uid="uid://h323x6ba1dxm"]
 
 [ext_resource type="Script" path="res://src/menu/root_menu.gd" id="1_rxcut"]
 [ext_resource type="PackedScene" uid="uid://ccfpknolo5c7n" path="res://src/menu/main_menu.tscn" id="1_ua32a"]

@@ -3,7 +3,6 @@ extends Control
 
 signal go_back()
 
-@onready var pause_dim_rect: ColorRect = $PauseDimRect
 @onready var title: Label = $Title
 @onready var back_button: Button = %BackButton
 
@@ -31,7 +30,6 @@ func _ready() -> void:
 
 
 func setup_pause_menu() -> void:
-	pause_dim_rect.show()
 	title.text = "Paused"
 	back_button.text = "Resume"
 	spacer2.show()

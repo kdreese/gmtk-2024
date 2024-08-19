@@ -28,11 +28,12 @@ func spawn_camera() -> void:
 	camera.limit_bottom = camera_bounds.end.y * 16
 	camera.position_smoothing_enabled = true
 	camera.position_smoothing_speed = 10.0
+	camera.process_callback = Camera2D.CAMERA2D_PROCESS_PHYSICS
 
 	player.add_child(camera)
 
 
-func spawn_level_transition()
+func spawn_level_transition():
 	var level_transition := preload("res://src/ui/level_transition.tscn").instantiate()
 	add_child(level_transition)
 	level_transition.open()
