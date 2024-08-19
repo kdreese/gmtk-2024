@@ -20,3 +20,4 @@ func puzzle_completed() -> void:
 	$Player.unfreeze()
 	$PuzzleConsole.hide()
 	$Door.open()
+	$Terminal.turn_on()
