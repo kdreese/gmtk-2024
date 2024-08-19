@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://h323x6ba1dxm"]
+[gd_scene load_steps=6 format=3 uid="uid://h323x6ba1dxm"]
 
 [ext_resource type="Script" path="res://src/menu/root_menu.gd" id="1_rxcut"]
 [ext_resource type="PackedScene" uid="uid://ccfpknolo5c7n" path="res://src/menu/main_menu.tscn" id="1_ua32a"]
+[ext_resource type="PackedScene" uid="uid://4djflhfxpkul" path="res://src/menu/settings_menu.tscn" id="3_lplnc"]
 [ext_resource type="PackedScene" uid="uid://dhev2kbdyj14q" path="res://src/menu/credits_menu.tscn" id="3_x51gt"]
 [ext_resource type="PackedScene" uid="uid://6tep8thjsvg6" path="res://src/levels/parallax_background.tscn" id="4_sfgg1"]
 
@@ -11,10 +12,15 @@ scroll_speed = -5.0
 
 [node name="MainMenu" parent="." instance=ExtResource("1_ua32a")]
 
+[node name="SettingsMenu" parent="." instance=ExtResource("3_lplnc")]
+visible = false
+
 [node name="CreditsMenu" parent="." instance=ExtResource("3_x51gt")]
 visible = false
 
 [node name="ParallaxBackground" parent="." instance=ExtResource("4_sfgg1")]
 
 [connection signal="show_credits" from="MainMenu" to="." method="_on_main_menu_show_credits"]
+[connection signal="show_settings" from="MainMenu" to="." method="_on_main_menu_show_settings"]
+[connection signal="go_back" from="SettingsMenu" to="." method="_on_settings_menu_go_back"]
 [connection signal="go_back" from="CreditsMenu" to="." method="_on_credits_menu_go_back"]

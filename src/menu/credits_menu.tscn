@@ -43,16 +43,6 @@ text = "Credits"
 label_settings = SubResource("LabelSettings_thmla")
 horizontal_alignment = 1
 
-[node name="BackButton" type="Button" parent="."]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 108.0
-offset_bottom = 39.0
-text = "Back"
-
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -160,5 +150,15 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "Show All Third-Party Licenses"
 
-[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
+[node name="BackButton" type="Button" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 108.0
+offset_bottom = 39.0
+text = "Back"
+
 [connection signal="pressed" from="ThirdPartyButton" to="." method="_on_third_party_button_pressed"]
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
