@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://83uawfodwefy"]
+[gd_scene load_steps=12 format=4 uid="uid://83uawfodwefy"]
 
 [ext_resource type="Script" path="res://src/levels/level_1.gd" id="1_0p52p"]
 [ext_resource type="PackedScene" uid="uid://ci6qp1vskqf4r" path="res://src/puzzles/flow/flow_puzzle_1.tscn" id="2_byl51"]
@@ -9,6 +9,9 @@
 [ext_resource type="PackedScene" uid="uid://cg0hj1r053cvc" path="res://src/game/terminal.tscn" id="5_on78q"]
 [ext_resource type="PackedScene" uid="uid://dqh0ukryq2dra" path="res://src/game/door.tscn" id="6_me2q3"]
 [ext_resource type="PackedScene" uid="uid://pxn4070gykuf" path="res://src/puzzles/puzzle_console.tscn" id="6_xshj0"]
+[ext_resource type="PackedScene" uid="uid://b5ahc2ny3o0x1" path="res://src/ui/level_transition.tscn" id="10_khid7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_krya8"]
 
 [node name="Level1" type="Node2D"]
 script = ExtResource("1_0p52p")
@@ -33,7 +36,17 @@ position = Vector2(240, -80)
 [node name="Door" parent="." instance=ExtResource("6_me2q3")]
 position = Vector2(283, -96)
 
+[node name="EndTrigger" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EndTrigger"]
+position = Vector2(437, -219)
+shape = SubResource("RectangleShape2D_krya8")
+
 [node name="PuzzleConsole" parent="." instance=ExtResource("6_xshj0")]
 visible = false
 
 [node name="ParallaxBackground" parent="." instance=ExtResource("3_57jrr")]
+
+[node name="LevelTransition" parent="." instance=ExtResource("10_khid7")]

@@ -9,5 +9,5 @@ func reset() -> void:
 	push_error("Not implemented")
 
 
-func load_puzzle(puzzle_to_load: PackedScene) -> void:
+func load_puzzle(_puzzle_to_load: PackedScene) -> void:
 	push_error("Not implemented")
