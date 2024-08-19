@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bgy4iri3nyqd0"
-path="res://.godot/imported/flow_background.png-dd3ffdc85625b66edba8a3f4a641f744.ctex"
+uid="uid://emiyt6nhfi3u"
+path="res://.godot/imported/flow_tileset.png-517a37d526078060528490da6daaec1f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/flow_background.png"
-dest_files=["res://.godot/imported/flow_background.png-dd3ffdc85625b66edba8a3f4a641f744.ctex"]
+source_file="res://assets/tileset/flow_tileset.png"
+dest_files=["res://.godot/imported/flow_tileset.png-517a37d526078060528490da6daaec1f.ctex"]
 
 [params]
 
