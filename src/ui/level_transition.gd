@@ -1,3 +1,4 @@
+class_name LevelTransition
 extends CanvasLayer
 
 

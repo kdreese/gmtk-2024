@@ -21,3 +21,7 @@ func _ready() -> void:
 	camera.position_smoothing_speed = 10.0
 
 	player.add_child(camera)
+
+	var level_transition := preload("res://src/ui/level_transition.tscn").instantiate()
+	add_child(level_transition)
+	level_transition.open()
