@@ -1,4 +1,4 @@
-extends PanelContainer
+extends CanvasLayer
 
 
 signal line_finished()
@@ -13,11 +13,11 @@ var line_idx: int
 var char_idx: int
 
 
-func _ready() -> void:
-	play()
-
-
 func play() -> void:
+	if visible:
+		# Don't play if we're already playing
+		return
+	show()
 	line_idx = 0
 	while line_idx < len(dialog.lines):
 		play_line()
@@ -29,19 +29,20 @@ func play() -> void:
 
 
 func play_line() -> void:
+	$Panel/RichTextLabel.text = ""
 	skip_line = false
 	char_idx = 0
 	var current_line := dialog.lines[line_idx]
 	$Timer.start()
 	while char_idx < len(current_line) and not skip_line:
 		await $Timer.timeout
-		$RichTextLabel.text = dialog.lines[line_idx].substr(0, char_idx + 1)
+		$Panel/RichTextLabel.text = dialog.lines[line_idx].substr(0, char_idx + 1)
 		if current_line[char_idx] not in [" ", "\t", "\n"]:
 			$TextSound.play()
 		char_idx += 1
 
 	$Timer.stop()
-	$RichTextLabel.text = current_line
+	$Panel/RichTextLabel.text = current_line
 	line_finished.emit()
 
 

@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://5tw80fstr66"]
+[gd_scene load_steps=5 format=3 uid="uid://5tw80fstr66"]
 
 [ext_resource type="Texture2D" uid="uid://ct0qj0vjjoeqp" path="res://assets/objects/text_box.png" id="1_tsing"]
 [ext_resource type="Script" path="res://src/ui/text_box.gd" id="2_31xto"]
-[ext_resource type="Script" path="res://src/ui/dialog.gd" id="3_gd7ck"]
 [ext_resource type="AudioStream" uid="uid://co37qqxqi3x65" path="res://assets/sounds/text.wav" id="4_6dv4s"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8pnyc"]
@@ -17,18 +16,26 @@ texture_margin_right = 4.14815
 texture_margin_bottom = 4.14815
 axis_stretch_vertical = 1
 
-[sub_resource type="Resource" id="Resource_mvctk"]
-script = ExtResource("3_gd7ck")
-lines = Array[String](["This is a test dialog.", "We like tests."])
-
-[node name="TextBox" type="PanelContainer"]
-offset_right = 269.0
-offset_bottom = 74.0
-theme_override_styles/panel = SubResource("StyleBoxTexture_8pnyc")
+[node name="TextBox" type="CanvasLayer"]
+visible = false
 script = ExtResource("2_31xto")
-dialog = SubResource("Resource_mvctk")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
+[node name="Panel" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(800, 200)
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -400.0
+offset_top = -250.0
+offset_right = 400.0
+offset_bottom = -44.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxTexture_8pnyc")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Panel"]
 layout_mode = 2
 theme_override_colors/default_color = Color(0.24, 1, 0.442667, 1)
 text = "Hello"

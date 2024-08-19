@@ -1,4 +1,5 @@
-[gd_scene load_steps=12 format=4 uid="uid://83uawfodwefy"]
+[gd_scene load_steps=14 format=4 uid="uid://83uawfodwefy"]
+
 
 [ext_resource type="Script" path="res://src/levels/level_1.gd" id="1_0p52p"]
 [ext_resource type="PackedScene" uid="uid://ci6qp1vskqf4r" path="res://src/puzzles/flow/flow_puzzle_1.tscn" id="2_byl51"]
@@ -11,6 +12,14 @@
 [ext_resource type="PackedScene" uid="uid://pxn4070gykuf" path="res://src/puzzles/puzzle_console.tscn" id="6_xshj0"]
 [ext_resource type="PackedScene" path="res://src/game/level_trigger.tscn" id="11_fv470"]
 [ext_resource type="PackedScene" uid="uid://h323x6ba1dxm" path="res://src/menu/root_menu.tscn" id="12_3yoxe"]
+[ext_resource type="PackedScene" uid="uid://ro4gcfqpqioc" path="res://src/game/help_point.tscn" id="10_2c3s3"]
+[ext_resource type="PackedScene" uid="uid://5tw80fstr66" path="res://src/ui/text_box.tscn" id="11_epong"]
+[ext_resource type="Script" path="res://src/ui/dialog.gd" id="12_ed4ej"]
+
+[sub_resource type="Resource" id="Resource_1m50v"]
+script = ExtResource("12_ed4ej")
+lines = Array[String](["Use WASD to move and Space to jump.", "I like explanatory text boxes"])
+
 
 [node name="Level1" type="Node2D"]
 script = ExtResource("1_0p52p")
@@ -40,6 +49,14 @@ visible = false
 
 [node name="ParallaxBackground" parent="." instance=ExtResource("3_57jrr")]
 
+
 [node name="LevelTrigger" parent="." instance=ExtResource("11_fv470")]
 position = Vector2(402, -189)
 scene_to_load = ExtResource("12_3yoxe")
+
+[node name="HelpPoint" parent="." instance=ExtResource("10_2c3s3")]
+position = Vector2(119, -32)
+
+[node name="TextBox" parent="." instance=ExtResource("11_epong")]
+dialog = SubResource("Resource_1m50v")
+visible = false

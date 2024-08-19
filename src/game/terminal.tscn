@@ -36,6 +36,9 @@ size = Vector2(32, 32)
 
 [sub_resource type="LabelSettings" id="LabelSettings_ekxv2"]
 font = ExtResource("2_w6rt8")
+font_size = 24
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
 
 [node name="Terminal" type="Area2D"]
 collision_layer = 0
@@ -55,9 +58,9 @@ shape = SubResource("RectangleShape2D_4shxy")
 
 [node name="InteractLabel" type="Label" parent="."]
 visible = false
-offset_left = -22.0
+offset_left = -33.0
 offset_top = -28.0
-offset_right = 157.0
+offset_right = 234.0
 offset_bottom = -5.0
 scale = Vector2(0.25, 0.25)
 text = "Press E to Interact"
