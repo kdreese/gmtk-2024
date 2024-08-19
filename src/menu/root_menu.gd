@@ -1,12 +1,16 @@
 extends Node
 
 
+@export var scroll_speed: float
+
+
 @onready var main_menu: CenterContainer = $MainMenu
 @onready var credits_menu: Control = $CreditsMenu
 
 
 func _ready() -> void:
 	(main_menu.get_node("%PlayButton") as Button).grab_focus()
+	$ParallaxBackground.set_scroll_speeds(scroll_speed)
 
 
 func _on_main_menu_show_credits() -> void:

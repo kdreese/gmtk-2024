@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://6tep8thjsvg6"]
+[gd_scene load_steps=8 format=3 uid="uid://6tep8thjsvg6"]
 
+[ext_resource type="Script" path="res://src/levels/parallax_background.gd" id="1_dq3hy"]
 [ext_resource type="Texture2D" uid="uid://h6bydb0w6f5a" path="res://assets/backgrounds/background_layer_06.png" id="1_m6ebq"]
 [ext_resource type="Texture2D" uid="uid://bmuk5h3jy16o0" path="res://assets/backgrounds/background_layer_05.png" id="2_ching"]
 [ext_resource type="Texture2D" uid="uid://dc0xyh35rvk57" path="res://assets/backgrounds/background_layer_04.png" id="3_u77ws"]
@@ -7,55 +8,56 @@
 [ext_resource type="Texture2D" uid="uid://t1i2hcwpu7dp" path="res://assets/backgrounds/background_layer_02.png" id="5_ylabg"]
 [ext_resource type="Texture2D" uid="uid://cmf5p7tiv3iwo" path="res://assets/backgrounds/background_layer_01.png" id="6_6wbsl"]
 
-[node name="CanvasLayer" type="CanvasLayer"]
+[node name="ParallaxBackground" type="CanvasLayer"]
 layer = -1
+script = ExtResource("1_dq3hy")
 
-[node name="ParallaxBackground" type="Node2D" parent="."]
+[node name="Layers" type="Node2D" parent="."]
 position = Vector2(640, 0)
 
-[node name="Layer6" type="Parallax2D" parent="ParallaxBackground"]
+[node name="Layer6" type="Parallax2D" parent="Layers"]
 repeat_size = Vector2(0, 1440)
 repeat_times = 3
 
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Layer6"]
+[node name="Sprite2D" type="Sprite2D" parent="Layers/Layer6"]
 texture = ExtResource("1_m6ebq")
 
-[node name="Layer5" type="Parallax2D" parent="ParallaxBackground"]
+[node name="Layer5" type="Parallax2D" parent="Layers"]
 scroll_scale = Vector2(1, 1.2)
 repeat_size = Vector2(0, 1440)
 repeat_times = 3
 
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Layer5"]
+[node name="Sprite2D" type="Sprite2D" parent="Layers/Layer5"]
 texture = ExtResource("2_ching")
 
-[node name="Layer4" type="Parallax2D" parent="ParallaxBackground"]
+[node name="Layer4" type="Parallax2D" parent="Layers"]
 scroll_scale = Vector2(1, 1.3)
 repeat_size = Vector2(0, 1440)
 repeat_times = 3
 
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Layer4"]
+[node name="Sprite2D" type="Sprite2D" parent="Layers/Layer4"]
 texture = ExtResource("3_u77ws")
 
-[node name="Layer3" type="Parallax2D" parent="ParallaxBackground"]
+[node name="Layer3" type="Parallax2D" parent="Layers"]
 scroll_scale = Vector2(1, 1.5)
 repeat_size = Vector2(0, 1440)
 repeat_times = 3
 
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Layer3"]
+[node name="Sprite2D" type="Sprite2D" parent="Layers/Layer3"]
 texture = ExtResource("4_w8hbv")
 
-[node name="Layer2" type="Parallax2D" parent="ParallaxBackground"]
+[node name="Layer2" type="Parallax2D" parent="Layers"]
 scroll_scale = Vector2(1, 2)
 repeat_size = Vector2(0, 1440)
 repeat_times = 3
 
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Layer2"]
+[node name="Sprite2D" type="Sprite2D" parent="Layers/Layer2"]
 texture = ExtResource("5_ylabg")
 
-[node name="Layer1" type="Parallax2D" parent="ParallaxBackground"]
+[node name="Layer1" type="Parallax2D" parent="Layers"]
 scroll_scale = Vector2(1, 2.5)
 repeat_size = Vector2(0, 1440)
 repeat_times = 3
 
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Layer1"]
+[node name="Sprite2D" type="Sprite2D" parent="Layers/Layer1"]
 texture = ExtResource("6_6wbsl")

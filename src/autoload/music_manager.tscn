@@ -1,9 +1,10 @@
 [gd_scene load_steps=2 format=3 uid="uid://c15v6nmef5lqk"]
 
-[ext_resource type="AudioStream" uid="uid://rk1idytdk87k" path="res://assets/my_little_robot.mp3" id="1_5dfjm"]
+[ext_resource type="AudioStream" uid="uid://12ts60mmiswa" path="res://assets/music/my_little_robot.ogg" id="1_ifrwj"]
 
 [node name="MusicManager" type="AudioStreamPlayer"]
 process_mode = 3
-stream = ExtResource("1_5dfjm")
+stream = ExtResource("1_ifrwj")
 volume_db = -8.0
+autoplay = true
 bus = &"Music"
