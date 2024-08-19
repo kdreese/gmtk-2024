@@ -23,6 +23,15 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_tt7rn")
 
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.745098)
+
 [node name="Title" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 10
@@ -44,43 +53,69 @@ offset_right = 108.0
 offset_bottom = 39.0
 text = "Back"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 98.0
-offset_top = 92.0
-offset_right = 386.0
-offset_bottom = 211.0
-scale = Vector2(0.5, 0.5)
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 125
+theme_override_constants/margin_top = 150
+theme_override_constants/margin_right = 125
+theme_override_constants/margin_bottom = 100
 
-[node name="Label1" type="Label" parent="VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-text = "Terry Hearst"
-label_settings = SubResource("LabelSettings_thmla")
 
-[node name="Label2" type="Label" parent="VBoxContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
-text = "Andrew Moore"
-label_settings = SubResource("LabelSettings_thmla")
+size_flags_horizontal = 3
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_font_size = 24
+bbcode_enabled = true
+text = "[b]Character Design[/b]
+Miki
 
-[node name="Label3" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-text = "Kyle Reese"
-label_settings = SubResource("LabelSettings_thmla")
+[b]Background Artist[/b]
+Grace
 
-[node name="Label4" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-text = "Miki"
-label_settings = SubResource("LabelSettings_thmla")
+[b]Asset Artists[/b]
+Miki	Grace
 
-[node name="Label5" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-text = "Gracé"
-label_settings = SubResource("LabelSettings_thmla")
+[b]Character Animation[/b]
+Miki
 
-[node name="Label6" type="Label" parent="VBoxContainer"]
+[b]Level Design[/b]
+Terry Hearst	Andrew Moore	Kyle Reese
+
+[b]Programming[/b]
+Terry Hearst	Andrew Moore	Kyle Reese
+
+[b]Writing[/b]
+<TODO>
+"
+tab_size = 8
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
-text = "Probably more people!!"
-label_settings = SubResource("LabelSettings_thmla")
+size_flags_horizontal = 3
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_font_size = 24
+bbcode_enabled = true
+text = "[b]Sound Effects[/b]
+Andrew Moore
+
+[b]Music[/b]
+[i]\"My Little Robot\"[/i]
+composed by Andrew Moore
+
+[b]Font[/b]
+<FONT LICENSE HERE>
+
+[b]Special Thanks[/b]
+Trivium Interactive"
+tab_size = 8
 
 [node name="ThirdPartyPanel" type="PanelContainer" parent="."]
 unique_name_in_owner = true
