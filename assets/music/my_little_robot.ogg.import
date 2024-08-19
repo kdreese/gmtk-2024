@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/my_little_robot.ogg-da175497f19c240773b2596b4
 [params]
 
 loop=true
-loop_offset=0
-bpm=0
-beat_count=0
+loop_offset=0.0
+bpm=76.0
+beat_count=128
 bar_beats=4
