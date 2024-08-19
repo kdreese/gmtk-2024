@@ -1,13 +1,17 @@
-[gd_scene load_steps=9 format=4 uid="uid://bby4nosfqqn8o"]
+[gd_scene load_steps=11 format=4 uid="uid://bby4nosfqqn8o"]
 
 [ext_resource type="Script" path="res://src/levels/level_1.gd" id="1_0p52p"]
 [ext_resource type="PackedScene" uid="uid://ci6qp1vskqf4r" path="res://src/puzzles/flow/flow_puzzle_1.tscn" id="2_byl51"]
 [ext_resource type="TileSet" uid="uid://prouykjdur4o" path="res://resources/tilesets/tileset_01.tres" id="2_kux3c"]
 [ext_resource type="TileSet" uid="uid://bth3qospiuewq" path="res://resources/tilesets/tileset_02.tres" id="3_mka6j"]
 [ext_resource type="PackedScene" uid="uid://5t5rtqxp61dy" path="res://src/game/player.tscn" id="4_obqjr"]
+[ext_resource type="TileSet" uid="uid://dcqu0nuio066k" path="res://resources/tilesets/tileset_objects.tres" id="5_go02r"]
 [ext_resource type="PackedScene" uid="uid://cg0hj1r053cvc" path="res://src/game/terminal.tscn" id="5_on78q"]
 [ext_resource type="PackedScene" uid="uid://dqh0ukryq2dra" path="res://src/game/door.tscn" id="6_me2q3"]
-[ext_resource type="PackedScene" path="res://src/puzzles/puzzle_console.tscn" id="6_xshj0"]
+[ext_resource type="PackedScene" uid="uid://pxn4070gykuf" path="res://src/puzzles/puzzle_console.tscn" id="6_xshj0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x3q4v"]
+size = Vector2(32, 12)
 
 [node name="Level1" type="Node2D"]
 script = ExtResource("1_0p52p")
@@ -22,6 +26,19 @@ tile_set = ExtResource("2_kux3c")
 
 [node name="Layer2" type="TileMapLayer" parent="Tiles" groups=["Tiles"]]
 tile_set = ExtResource("3_mka6j")
+
+[node name="LayerObjects" type="TileMapLayer" parent="Tiles"]
+tile_map_data = PackedByteArray("AAALAP3/AAAAAAAAAAAKAP3/AAAAAAAAAAA=")
+tile_set = ExtResource("5_go02r")
+
+[node name="SpikesArea" type="Area2D" parent="Tiles/LayerObjects"]
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tiles/LayerObjects/SpikesArea"]
+position = Vector2(176, -38)
+shape = SubResource("RectangleShape2D_x3q4v")
 
 [node name="Player" parent="." instance=ExtResource("4_obqjr")]
 position = Vector2(64, -32)

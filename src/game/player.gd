@@ -15,7 +15,7 @@ extends CharacterBody2D
 @export var DASH_COOLDOWN := 0.3
 @export var GROUNDED_JUMP_VELOCITY := -300.0
 @export var AERIAL_JUMP_VELOCITY := -280.0
-@export var JUMP_RELEASE_VELOCITY_REDUCTION := 3.0
+@export var JUMP_RELEASE_VELOCITY_REDUCTION := 1.8
 @export var COYOTE_TIME_LIMIT := 0.2
 @export var LANDING_JUMP_BUFFER_TIME := 0.05
 
@@ -183,3 +183,8 @@ func swap_collision_states() -> void:
 	else:
 		standing_collision_shape.disabled = false
 		dashing_collision_shape.disabled = true
+
+
+func _on_hurt_box_area_entered(area: Area2D) -> void:
+	animated_sprite_2d.play("hurt")
+	print("area entered")
