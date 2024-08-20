@@ -6,7 +6,7 @@
 [ext_resource type="TileSet" uid="uid://bth3qospiuewq" path="res://resources/tilesets/tileset_02.tres" id="3_envvs"]
 [ext_resource type="PackedScene" uid="uid://5t5rtqxp61dy" path="res://src/game/player.tscn" id="4_ebopm"]
 [ext_resource type="PackedScene" uid="uid://cg0hj1r053cvc" path="res://src/game/terminal.tscn" id="5_capvt"]
-[ext_resource type="PackedScene" uid="uid://csoqlqspylppw" path="res://src/levels/level_3.tscn" id="8_bl3p7"]
+[ext_resource type="PackedScene" path="res://src/levels/level_3.tscn" id="8_bl3p7"]
 [ext_resource type="PackedScene" uid="uid://bexktds2khmdd" path="res://src/game/level_trigger.tscn" id="9_g5tcx"]
 [ext_resource type="PackedScene" uid="uid://ro4gcfqpqioc" path="res://src/game/help_point.tscn" id="10_wu0x7"]
 
