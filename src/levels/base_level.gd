@@ -49,6 +49,14 @@ func spawn_pause_menu() -> void:
 	pause_menu.go_back.connect(func(): pause_menu.hide(); get_tree().paused = false)
 
 
+func play_text_box(text_box: TextBox) -> void:
+	var player: CharacterBody2D = get_tree().get_first_node_in_group("Player")
+	player.freeze()
+	text_box.play()
+	await text_box.text_finished
+	player.unfreeze()
+
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
 		get_tree().paused = true
