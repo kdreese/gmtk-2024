@@ -5,6 +5,8 @@ extends Node2D
 
 var pause_menu: Control
 
+var player: Player
+
 
 func _ready() -> void:
 	spawn_camera()
@@ -14,7 +16,7 @@ func _ready() -> void:
 
 
 func spawn_camera() -> void:
-	var player: CharacterBody2D = get_tree().get_first_node_in_group("Player")
+	player = get_tree().get_first_node_in_group("Player")
 
 	var camera_bounds := Rect2i()
 
@@ -32,12 +34,15 @@ func spawn_camera() -> void:
 	camera.process_callback = Camera2D.CAMERA2D_PROCESS_PHYSICS
 
 	player.add_child(camera)
+	player.freeze()
 
 
 func spawn_level_transition():
 	var level_transition := preload("res://src/ui/level_transition.tscn").instantiate()
 	add_child(level_transition)
 	level_transition.open()
+	await level_transition.animation_finished
+	player.unfreeze()
 
 
 func spawn_pause_menu() -> void:
