@@ -96,6 +96,12 @@ func _input(event: InputEvent) -> void:
 				if atlas_coords.x in [0, 2]:
 					color_to_place = atlas_coords.y
 					last_valid_tile = grid_coords
+				elif atlas_coords.x == 1:
+					clear_path(follow_path(grid_coords))
+					color_to_place = atlas_coords.y
+					if color_to_place not in unconnected_colors:
+						unconnected_colors.append(color_to_place)
+					last_valid_tile = grid_coords
 				else:
 					color_to_place = INVALID
 
@@ -219,6 +225,7 @@ func get_edge_tile_params(dir_1: Vector2i, dir_2: Vector2i) -> Array[int]:
 			push_error("Fell out of match statement")
 			return []
 
+
 func get_vertex_direction(alt_tile: int, is_node: bool = false) -> Vector2i:
 	if is_node:
 		if alt_tile == 0:
@@ -245,6 +252,7 @@ func get_vertex_direction(alt_tile: int, is_node: bool = false) -> Vector2i:
 			push_error("Invalid alt tile")
 			return Vector2i.ZERO
 
+
 # Returns [atlas_coords.x, alt_tile_flags]
 func get_vertex_tile_params(dir: Vector2i, is_node: bool = false) -> Array[int]:
 	if dir not in [Vector2i.LEFT, Vector2i.DOWN, Vector2i.RIGHT, Vector2i.UP]:
@@ -270,6 +278,7 @@ func get_vertex_tile_params(dir: Vector2i, is_node: bool = false) -> Array[int]:
 		else:
 			return [2, ROTATION_FLAGS[3]]
 
+
 func check_if_connected() -> void:
 	var colors_to_remove = []
 	for color in unconnected_colors:
@@ -278,23 +287,11 @@ func check_if_connected() -> void:
 		if len(starting_nodes) == 0:
 			continue
 
-		var tile: Vector2i = starting_nodes[0]
-
-		var tiles_searched : Array[Vector2i] = [tile]
-		var tiles_to_search : Array[Vector2i] = [tile + get_vertex_direction(wires.get_cell_alternative_tile(tile), true)]
-		while len(tiles_to_search) > 0:
-			tile = tiles_to_search.pop_front()
-			tiles_searched.append(tile)
-			if wires.get_cell_source_id(tile) != 0:
+		for tile in follow_path(starting_nodes[0]):
+			if tile == starting_nodes[0]:
+				# Ignore the start tile.
 				continue
-			var atlas_coords := wires.get_cell_atlas_coords(tile)
-			var alt_tile := wires.get_cell_alternative_tile(tile)
-			if atlas_coords.x in [3, 4]:
-				for direction in get_edge_directions(atlas_coords, alt_tile):
-					var new_tile = tile + direction
-					if (new_tile not in tiles_searched) and (new_tile not in tiles_to_search):
-						tiles_to_search.append(new_tile)
-			elif atlas_coords.x == 1:
+			if wires.get_cell_atlas_coords(tile) == Vector2i(1, color):
 				# We got to the other node.
 				$CompleteSound.play()
 				color_connected.emit(color)
@@ -305,3 +302,34 @@ func check_if_connected() -> void:
 
 	if len(unconnected_colors) == 0:
 		puzzle_complete.emit()
+
+
+## Follow of path of wires. Returns a list of cells containing wire tiles.
+func follow_path(starting_tile: Vector2i) -> Array[Vector2i]:
+	var tile := starting_tile
+	var tiles_searched: Array[Vector2i] = [tile]
+	var tiles_to_search: Array[Vector2i] = [tile + get_vertex_direction(wires.get_cell_alternative_tile(tile), true)]
+	while len(tiles_to_search) > 0:
+		tile = tiles_to_search.pop_front()
+		tiles_searched.append(tile)
+		if wires.get_cell_source_id(tile) != 0:
+			continue
+		var atlas_coords := wires.get_cell_atlas_coords(tile)
+		var alt_tile := wires.get_cell_alternative_tile(tile)
+		if atlas_coords.x in [3, 4]:
+			for direction in get_edge_directions(atlas_coords, alt_tile):
+				var new_tile = tile + direction
+				if (new_tile not in tiles_searched) and (new_tile not in tiles_to_search):
+					tiles_to_search.append(new_tile)
+
+	return tiles_searched
+
+
+## Clear a path of wires. Keeps the contacts in place, but disconnects them.
+func clear_path(tiles: Array[Vector2i]) -> void:
+	for tile in tiles:
+		var atlas_coords := wires.get_cell_atlas_coords(tile)
+		if atlas_coords.x == 1:
+			wires.set_cell(tile, 0, Vector2i(0, atlas_coords.y), ROTATION_FLAGS[0])
+		elif atlas_coords.x in [2, 3, 4]:
+			wires.set_cell(tile, -1)

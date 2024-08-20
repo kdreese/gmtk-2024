@@ -7,6 +7,7 @@ extends BaseLevel
 func _ready() -> void:
 	super._ready()
 	$Terminal.interacted.connect(show_puzzle)
+	$HelpPoint.interacted.connect(play_text_box.bind($TextBox))
 	$PuzzleConsole.puzzle_complete.connect(puzzle_completed)
 
 
