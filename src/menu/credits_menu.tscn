@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://dhev2kbdyj14q"]
+[gd_scene load_steps=6 format=3 uid="uid://dhev2kbdyj14q"]
 
 [ext_resource type="Script" path="res://src/menu/credits_menu.gd" id="1_tt7rn"]
 [ext_resource type="FontFile" uid="uid://ckdjks6e8qo4n" path="res://assets/fonts/VCR_OSD_MONO_1.001.ttf" id="2_jm5b0"]
+[ext_resource type="Texture2D" uid="uid://4kv0pw73st84" path="res://assets/ui/whalewhalewhale.png" id="3_847xx"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_thmla"]
 font = ExtResource("2_jm5b0")
@@ -105,6 +106,10 @@ Grace Ray
 [font_size=28]Special Thanks[/font_size]
 Trivium Interactive"
 tab_size = 8
+
+[node name="Whalewhalewhale" type="Sprite2D" parent="."]
+position = Vector2(1183, 95)
+texture = ExtResource("3_847xx")
 
 [node name="ThirdPartyPanel" type="PanelContainer" parent="."]
 unique_name_in_owner = true
