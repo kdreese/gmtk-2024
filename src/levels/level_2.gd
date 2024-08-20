@@ -2,4 +2,4 @@ extends BaseLevel
 
 
 func puzzle_completed() -> void:
-	$Door.open()
+	player.unlocked_double_jump = true

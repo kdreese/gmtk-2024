@@ -7,21 +7,20 @@ signal text_finished()
 signal next()
 
 
-@export var dialog: Dialog
-
 var skip_line: bool
 var line_idx: int
 var char_idx: int
 
 
-func play() -> void:
+func play(lines: Array[String]) -> void:
 	if visible:
 		# Don't play if we're already playing
 		return
 	show()
 	line_idx = 0
-	while line_idx < len(dialog.lines):
-		play_line()
+	while line_idx < len(lines):
+		var line := lines[line_idx]
+		play_line(line)
 		await line_finished
 		await next
 		line_idx += 1
@@ -29,32 +28,34 @@ func play() -> void:
 	hide()
 
 
-func play_line() -> void:
+func play_line(line: String) -> void:
 	$Panel/RichTextLabel.text = ""
 	skip_line = false
 	char_idx = 0
-	var current_line := dialog.lines[line_idx]
 	$Timer.start()
-	while char_idx < len(current_line) and not skip_line:
+	while char_idx < len(line) and not skip_line:
 		await $Timer.timeout
-		$Panel/RichTextLabel.text = dialog.lines[line_idx].substr(0, char_idx + 1)
-		if current_line[char_idx] not in [" ", "\t", "\n"]:
+		$Panel/RichTextLabel.text = line.substr(0, char_idx + 1)
+		if line[char_idx] not in [" ", "\t", "\n"]:
 			$TextSound.play()
 		char_idx += 1
 
 	$Timer.stop()
-	$Panel/RichTextLabel.text = current_line
+	$Panel/RichTextLabel.text = line
 	line_finished.emit()
 
 
 func skip_to_end_of_line() -> void:
-	if line_idx < len(dialog.lines) and char_idx < len(dialog.lines[line_idx]):
-		skip_line = true
+	skip_line = true
 
 
 func _input(event: InputEvent) -> void:
+	if not visible:
+		return
 	if event.is_action_pressed("jump") or event.is_action_pressed("ui_accept"):
 		next.emit()
+		get_viewport().set_input_as_handled()
 	elif event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			next.emit()
+			get_viewport().set_input_as_handled()

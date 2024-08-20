@@ -1,15 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://bexktds2khmdd"]
+[gd_scene load_steps=2 format=3 uid="uid://bexktds2khmdd"]
 
 [ext_resource type="Script" path="res://src/game/level_trigger.gd" id="1_tcia1"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qc0r4"]
 
 [node name="LevelTrigger" type="Area2D"]
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("1_tcia1")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_qc0r4")
 
 [connection signal="body_entered" from="." to="." method="on_body_entered"]
