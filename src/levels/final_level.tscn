@@ -1,10 +1,48 @@
-[gd_scene load_steps=6 format=4 uid="uid://tdij1g7vjanf"]
+[gd_scene load_steps=10 format=4 uid="uid://tdij1g7vjanf"]
 
 [ext_resource type="Script" path="res://src/levels/final_level.gd" id="1_1mxsk"]
 [ext_resource type="TileSet" uid="uid://prouykjdur4o" path="res://resources/tilesets/tileset_01.tres" id="1_6yljt"]
 [ext_resource type="TileSet" uid="uid://bth3qospiuewq" path="res://resources/tilesets/tileset_02.tres" id="2_jb0s1"]
 [ext_resource type="PackedScene" uid="uid://5t5rtqxp61dy" path="res://src/game/player.tscn" id="3_q8wqb"]
 [ext_resource type="Texture2D" uid="uid://o5pj6uiqi5a8" path="res://assets/backgrounds/cockpit.png" id="4_fmahl"]
+[ext_resource type="PackedScene" uid="uid://ro4gcfqpqioc" path="res://src/game/help_point.tscn" id="6_0nu00"]
+
+[sub_resource type="Animation" id="Animation_l3xnn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FadeRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_quipr"]
+resource_name = "fade_out"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FadeRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hv1lr"]
+_data = {
+"RESET": SubResource("Animation_l3xnn"),
+"fade_out": SubResource("Animation_quipr")
+}
 
 [node name="FinalLevel" type="Node2D"]
 script = ExtResource("1_1mxsk")
@@ -17,19 +55,41 @@ use_parent_material = true
 tile_set = ExtResource("1_6yljt")
 
 [node name="Layer2" type="TileMapLayer" parent="Tiles" groups=["Tiles"]]
-tile_map_data = PackedByteArray("AAAAAP//AAAEAAEAAAABAP//AAAKAAAAAAACAP//AAAKAAAAAAADAP//AAAKAAAAAAAEAP//AAAKAAAAAAAFAP//AAAKAAAAAAAGAP//AAAKAAAAAAAHAP//AAAKAAAAAAAIAP//AAAKAAAAAAAJAP//AAAKAAAAAAAKAP//AAAKAAAAAAALAP//AAAKAAAAAAAMAP//AAAKAAAAAAANAP//AAAKAAAAAAAOAP//AAAKAAAAAAAPAP//AAAKAAAAAAAQAP//AAAKAAAAAAARAP//AAAKAAAAAAASAP//AAAKAAAAAAATAP//AAAHAAEAAAAAAP7/AAAAAAEAAAAAAP3/AAAAAAEAAAAAAPz/AAAAAAEAAAAAAPv/AAAAAAEAAAAAAPr/AAAAAAEAAAAAAPn/AAAAAAEAAAAAAPj/AAAAAAEAAAAAAPf/AAAAAAEAAAAAAPb/AAAAAAEAAAAAAPX/AAAEAAIAAAABAPX/AAAJAAMAAAACAPX/AAAJAAMAAAADAPX/AAAJAAMAAAAEAPX/AAAJAAMAAAAFAPX/AAAJAAMAAAAGAPX/AAAJAAMAAAAHAPX/AAAJAAMAAAAIAPX/AAAJAAMAAAAJAPX/AAAJAAMAAAAKAPX/AAAJAAMAAAALAPX/AAAJAAMAAAAMAPX/AAAJAAMAAAANAPX/AAAJAAMAAAAOAPX/AAAJAAMAAAAPAPX/AAAJAAMAAAAQAPX/AAAJAAMAAAARAPX/AAAJAAMAAAASAPX/AAAJAAMAAAATAPX/AAAHAAIAAAATAPb/AAAAAAEAAAATAPf/AAAAAAEAAAATAPj/AAAAAAEAAAATAPn/AAAAAAEAAAATAPr/AAAAAAEAAAATAPv/AAAAAAEAAAATAPz/AAAAAAEAAAATAP3/AAAAAAEAAAATAP7/AAAAAAEAAAAAAAAAAAAIAAMAAAABAAAAAAAJAAMAAAACAAAAAAAJAAMAAAADAAAAAAAJAAMAAAAEAAAAAAAJAAMAAAAFAAAAAAAJAAMAAAAGAAAAAAAJAAMAAAAHAAAAAAAJAAMAAAAIAAAAAAAJAAMAAAAJAAAAAAAJAAMAAAAKAAAAAAAJAAMAAAALAAAAAAAJAAMAAAAMAAAAAAAJAAMAAAANAAAAAAAJAAMAAAAOAAAAAAAJAAMAAAAPAAAAAAAJAAMAAAAQAAAAAAAJAAMAAAARAAAAAAAJAAMAAAASAAAAAAAJAAMAAAATAAAAAAALAAMAAAATAPT/AAALAAAAAAASAPT/AAAKAAAAAAARAPT/AAAKAAAAAAAQAPT/AAAKAAAAAAAPAPT/AAAKAAAAAAAOAPT/AAAKAAAAAAANAPT/AAAKAAAAAAAMAPT/AAAKAAAAAAALAPT/AAAKAAAAAAAKAPT/AAAKAAAAAAAJAPT/AAAKAAAAAAAIAPT/AAAKAAAAAAAHAPT/AAAKAAAAAAAGAPT/AAAKAAAAAAAFAPT/AAAKAAAAAAAEAPT/AAAKAAAAAAADAPT/AAAKAAAAAAACAPT/AAAKAAAAAAABAPT/AAAKAAAAAAAAAPT/AAAIAAAAAAA=")
+tile_map_data = PackedByteArray("AAAAAP//AAAAAAEAAAATAP//AAAAAAEAAAAAAP7/AAAAAAEAAAAAAP3/AAAAAAEAAAAAAPz/AAAAAAEAAAAAAPv/AAAAAAEAAAAAAPr/AAAAAAEAAAAAAPn/AAAAAAEAAAAAAPj/AAAEAAIAAAAAAPf/AAAEAAEAAAAAAPb/AAAAAAEAAAAAAPX/AAAEAAIAAAABAPX/AAAJAAMAAAACAPX/AAAJAAMAAAADAPX/AAAJAAMAAAAEAPX/AAAJAAMAAAAFAPX/AAAJAAMAAAAGAPX/AAAJAAMAAAAHAPX/AAAJAAMAAAAIAPX/AAAJAAMAAAAJAPX/AAAJAAMAAAAKAPX/AAAJAAMAAAALAPX/AAAJAAMAAAAMAPX/AAAJAAMAAAANAPX/AAAJAAMAAAAOAPX/AAAJAAMAAAAPAPX/AAAJAAMAAAAQAPX/AAAJAAMAAAARAPX/AAAJAAMAAAASAPX/AAAJAAMAAAATAPX/AAAHAAIAAAATAPb/AAAAAAEAAAATAPf/AAAAAAEAAAATAPj/AAAAAAEAAAATAPn/AAAAAAEAAAATAPr/AAAAAAEAAAATAPv/AAAHAAEAAAATAPz/AAAHAAIAAAATAP3/AAAAAAEAAAATAP7/AAAAAAEAAAAAAAAAAAABAAIAAAABAAAAAAACAAMAAAACAAAAAAACAAMAAAADAAAAAAACAAMAAAAEAAAAAAACAAMAAAAFAAAAAAACAAMAAAAGAAAAAAACAAMAAAAHAAAAAAACAAMAAAAIAAAAAAACAAMAAAAJAAAAAAACAAMAAAAKAAAAAAACAAMAAAALAAAAAAACAAMAAAAMAAAAAAACAAMAAAANAAAAAAACAAMAAAAOAAAAAAACAAMAAAAPAAAAAAACAAMAAAAQAAAAAAACAAMAAAARAAAAAAACAAMAAAASAAAAAAACAAMAAAATAAAAAAADAAIAAAATAPT/AAALAAAAAAASAPT/AAAKAAAAAAARAPT/AAAKAAAAAAAQAPT/AAAKAAAAAAAPAPT/AAAKAAAAAAAOAPT/AAAKAAAAAAANAPT/AAAKAAAAAAAMAPT/AAAKAAAAAAALAPT/AAAKAAAAAAAKAPT/AAAKAAAAAAAJAPT/AAAKAAAAAAAIAPT/AAAKAAAAAAAHAPT/AAAKAAAAAAAGAPT/AAAKAAAAAAAFAPT/AAAKAAAAAAAEAPT/AAAKAAAAAAADAPT/AAAKAAAAAAACAPT/AAAKAAAAAAABAPT/AAAKAAAAAAAAAPT/AAAIAAAAAAAQAPv/AAAIAAAAAAARAPv/AAAKAAAAAAASAPv/AAAKAAAAAAAOAPz/AAABAAMAAAAPAPz/AAACAAMAAAAQAPz/AAAFAAMAAAARAPz/AAAJAAMAAAASAPz/AAAJAAMAAAABAPf/AAAKAAAAAAACAPf/AAALAAAAAAABAPj/AAAJAAMAAAACAPj/AAAGAAMAAAADAPj/AAADAAMAAAA=")
 tile_set = ExtResource("2_jb0s1")
 
 [node name="Player" parent="." instance=ExtResource("3_q8wqb")]
-position = Vector2(64, -32)
+position = Vector2(64, 0)
+unlocked_double_jump = true
+unlocked_dash = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -1
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
-offset_left = -170.0
-offset_top = -100.0
-offset_right = 1110.0
-offset_bottom = 620.0
-scale = Vector2(1.25, 1.25)
+offset_right = 1280.0
+offset_bottom = 720.0
 texture = ExtResource("4_fmahl")
+
+[node name="HelpPoint" parent="." instance=ExtResource("6_0nu00")]
+position = Vector2(280, -80)
+dialog = Array[String](["Oh joyous day!
+The time has come!", "Take up the seat in this cockpit. You have earned it."])
+
+[node name="FadeCanvas" type="CanvasLayer" parent="."]
+
+[node name="FadeRect" type="ColorRect" parent="FadeCanvas"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+
+[node name="FadeAnimation" type="AnimationPlayer" parent="FadeCanvas"]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_hv1lr")
+}
+
+[connection signal="help_text_finished" from="HelpPoint" to="." method="_on_help_point_help_text_finished"]
