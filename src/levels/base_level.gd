@@ -53,6 +53,7 @@ func spawn_camera() -> void:
 		camera_bounds = camera_bounds.merge(tiles.get_used_rect())
 
 	var camera := Camera2D.new()
+	camera.name = "Camera2D"
 	camera.zoom = Vector2(4.0, 4.0)
 	camera.limit_left = camera_bounds.position.x * 16
 	camera.limit_top = camera_bounds.position.y * 16
@@ -116,3 +117,4 @@ func _input(event: InputEvent) -> void:
 		get_tree().paused = true
 		pause_menu.show()
 		(pause_menu.get_node("%BackButton") as Button).grab_focus()
+		get_viewport().set_input_as_handled()
