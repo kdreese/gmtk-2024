@@ -28,6 +28,7 @@ position = Vector2(0, -16)
 shape = SubResource("RectangleShape2D_4shxy")
 
 [node name="InteractLabel" type="Label" parent="."]
+visible = false
 offset_left = -33.0
 offset_top = -32.0
 offset_right = 234.0

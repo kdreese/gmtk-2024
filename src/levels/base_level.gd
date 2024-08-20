@@ -33,15 +33,13 @@ func play_dialog(lines: Array[String], freeze_unfreeze := true) -> void:
 		player.unfreeze()
 
 
-func play_puzzle(puzzle: PackedScene, dialog_before: Array[String] = [], dialog_after: Array[String] = []) -> void:
+func play_puzzle(puzzle: PackedScene, dialog_before: Array[String] = []) -> void:
 	player.freeze()
 	puzzle_console.show()
 	await puzzle_console.load_puzzle(puzzle)
 	@warning_ignore("redundant_await")
 	await play_dialog(dialog_before, false)
 	await puzzle_console.puzzle_complete
-	@warning_ignore("redundant_await")
-	await play_dialog(dialog_after, false)
 	puzzle_console.hide()
 	player.unfreeze()
 
