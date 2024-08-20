@@ -3,9 +3,9 @@ class_name BaseLevel
 extends Node2D
 
 
-var pause_menu: Control
-
 var player: Player
+var pause_menu: Control
+var text_box: TextBox
 
 
 func _ready() -> void:
@@ -13,6 +13,14 @@ func _ready() -> void:
 	spawn_level_transition()
 	spawn_pause_menu()
 	spawn_spikes()
+	spawn_text_box()
+
+
+func play_dialog(lines: Array[String]) -> void:
+	player.freeze()
+	text_box.play(lines)
+	await text_box.text_finished
+	player.unfreeze()
 
 
 func spawn_camera() -> void:
@@ -66,15 +74,10 @@ func spawn_spikes() -> void:
 			add_child(spikes)
 
 
-func play_text_box(text_box: TextBox) -> void:
-	var player: CharacterBody2D = get_tree().get_first_node_in_group("Player")
-	var was_frozen := bool(not player.can_move)
-	if not was_frozen:
-		player.freeze()
-	text_box.play()
-	await text_box.text_finished
-	if not was_frozen:
-		player.unfreeze()
+func spawn_text_box() -> void:
+	text_box = preload("res://src/ui/text_box.tscn").instantiate()
+	add_child(text_box)
+	text_box.hide()
 
 
 func _input(event: InputEvent) -> void:

@@ -1,24 +1,21 @@
-[gd_scene load_steps=17 format=4 uid="uid://83uawfodwefy"]
+[gd_scene load_steps=15 format=4 uid="uid://83uawfodwefy"]
 
 [ext_resource type="Script" path="res://src/levels/level_1.gd" id="1_0p52p"]
 [ext_resource type="PackedScene" uid="uid://ci6qp1vskqf4r" path="res://src/puzzles/flow/flow_puzzle_1.tscn" id="2_byl51"]
 [ext_resource type="TileSet" uid="uid://prouykjdur4o" path="res://resources/tilesets/tileset_01.tres" id="2_kux3c"]
-[ext_resource type="PackedScene" path="res://src/levels/parallax_background.tscn" id="3_57jrr"]
+[ext_resource type="PackedScene" uid="uid://6tep8thjsvg6" path="res://src/levels/parallax_background.tscn" id="3_57jrr"]
 [ext_resource type="TileSet" uid="uid://bth3qospiuewq" path="res://resources/tilesets/tileset_02.tres" id="3_mka6j"]
 [ext_resource type="PackedScene" uid="uid://5t5rtqxp61dy" path="res://src/game/player.tscn" id="4_obqjr"]
-[ext_resource type="TileSet" uid="uid://dcqu0nuio066k" path="res://resources/tilesets/tileset_objects.tres" id="5_6rfn8"]
+[ext_resource type="TileSet" uid="uid://4dbfngm8wapm" path="res://resources/tilesets/tileset_objects.tres" id="5_6rfn8"]
 [ext_resource type="PackedScene" uid="uid://cg0hj1r053cvc" path="res://src/game/terminal.tscn" id="5_on78q"]
 [ext_resource type="PackedScene" uid="uid://dqh0ukryq2dra" path="res://src/game/door.tscn" id="6_me2q3"]
 [ext_resource type="PackedScene" uid="uid://pxn4070gykuf" path="res://src/puzzles/puzzle_console.tscn" id="6_xshj0"]
-[ext_resource type="PackedScene" path="res://src/game/help_point.tscn" id="10_2c3s3"]
-[ext_resource type="PackedScene" path="res://src/levels/final_level.tscn" id="11_bd47o"]
-[ext_resource type="PackedScene" uid="uid://5tw80fstr66" path="res://src/ui/text_box.tscn" id="11_epong"]
-[ext_resource type="PackedScene" path="res://src/game/level_trigger.tscn" id="11_fv470"]
-[ext_resource type="Script" path="res://src/ui/dialog.gd" id="12_ed4ej"]
+[ext_resource type="PackedScene" uid="uid://ro4gcfqpqioc" path="res://src/game/help_point.tscn" id="10_2c3s3"]
+[ext_resource type="PackedScene" uid="uid://bexktds2khmdd" path="res://src/game/level_trigger.tscn" id="11_fv470"]
+[ext_resource type="PackedScene" uid="uid://bev30cs4p44qc" path="res://src/levels/level_2.tscn" id="12_468xu"]
 
-[sub_resource type="Resource" id="Resource_1m50v"]
-script = ExtResource("12_ed4ej")
-lines = Array[String](["Use WASD to move and Space to jump.", "I like explanatory text boxes"])
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ullp8"]
+size = Vector2(24, 24)
 
 [node name="Level1" type="Node2D"]
 script = ExtResource("1_0p52p")
@@ -53,11 +50,12 @@ visible = false
 [node name="ParallaxBackground" parent="." instance=ExtResource("3_57jrr")]
 
 [node name="LevelTrigger" parent="." instance=ExtResource("11_fv470")]
-position = Vector2(402, -189)
-scene_to_load = ExtResource("11_bd47o")
+scene_to_load = ExtResource("12_468xu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelTrigger"]
+position = Vector2(404, -188)
+shape = SubResource("RectangleShape2D_ullp8")
 
 [node name="HelpPoint" parent="." instance=ExtResource("10_2c3s3")]
 position = Vector2(119, -32)
-
-[node name="TextBox" parent="." instance=ExtResource("11_epong")]
-dialog = SubResource("Resource_1m50v")
+dialog = Array[String](["Use WASD to move and Space to jump.", "I like explanatory text boxes"])

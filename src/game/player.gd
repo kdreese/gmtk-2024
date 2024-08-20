@@ -28,7 +28,7 @@ var is_hurt := false
 var damaging_area: Area2D
 
 # Jump variables
-@export var unlocked_double_jump := true
+@export var unlocked_double_jump := false
 var has_used_grounded_jump := false
 var has_used_aerial_jump := false		# TODO: Convert to num_aerial_jumps in case we want to allow for more than one
 var time_since_was_on_floor := 0.0
@@ -37,7 +37,7 @@ var time_since_stored_jump_attempted := 0.0
 var is_jumping_up := false
 
 # Dash variables
-@export var unlocked_dash := true
+@export var unlocked_dash := false
 var is_dashing := false
 var dash_time := 0.0
 var dash_cooldown_timer := 0.0

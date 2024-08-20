@@ -1,10 +1,9 @@
 extends Area2D
 
 
-signal interacted()
+@export_multiline var dialog: Array[String] = []
 
 @onready var interact_label: Label = $InteractLabel
-@onready var collision_shape: CollisionShape2D = $CollisionShape2D
 
 
 func _on_body_entered(_body: Node2D) -> void:
@@ -17,4 +16,4 @@ func _on_body_exited(_body: Node2D) -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact") and interact_label.visible:
-		interacted.emit()
+		owner.play_dialog(dialog)
