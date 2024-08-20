@@ -3,8 +3,13 @@ extends Area2D
 
 @export var scene_to_load: PackedScene
 
+var was_triggered := false
+
 
 func on_body_entered(_body: Node2D) -> void:
+	if was_triggered:
+		return
+	was_triggered = true
 	var level_transition := owner.get_node("LevelTransition") as LevelTransition
 	if level_transition != null:
 		level_transition.close()

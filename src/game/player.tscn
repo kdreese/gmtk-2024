@@ -1,7 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://5t5rtqxp61dy"]
+[gd_scene load_steps=10 format=3 uid="uid://5t5rtqxp61dy"]
 
 [ext_resource type="Script" path="res://src/game/player.gd" id="1_21smu"]
-[ext_resource type="SpriteFrames" uid="uid://ce8sxgysi15q5" path="res://assets/characters/player/player_sprite_frames.tres" id="2_63n2m"]
+[ext_resource type="SpriteFrames" uid="uid://ce8sxgysi15q5" path="res://resources/player_sprite_frames.tres" id="2_63n2m"]
 [ext_resource type="AudioStream" uid="uid://cebju2b7ouf82" path="res://assets/sounds/jump.wav" id="3_47665"]
 [ext_resource type="AudioStream" uid="uid://bm7tgjnq42ybi" path="res://assets/sounds/dash.wav" id="4_h3ksm"]
 [ext_resource type="AudioStream" uid="uid://c0r84jdrakxdw" path="res://assets/sounds/step_1.wav" id="5_248jy"]
@@ -11,6 +11,10 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6takb"]
 radius = 8.0
 height = 24.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yvbrx"]
+radius = 5.0
+height = 16.0
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 z_index = 10
@@ -63,5 +67,19 @@ bus = &"Sound"
 [node name="StepTimer" type="Timer" parent="."]
 wait_time = 0.25
 
+[node name="HurtTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(0, -9)
+shape = SubResource("CapsuleShape2D_yvbrx")
+
 [connection signal="animation_changed" from="AnimatedSprite2D" to="." method="on_animation_changed"]
 [connection signal="timeout" from="StepTimer" to="." method="play_step_sound"]
+[connection signal="timeout" from="HurtTimer" to="." method="_on_hurt_timer_timeout"]
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]

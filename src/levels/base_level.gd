@@ -10,6 +10,7 @@ func _ready() -> void:
 	spawn_camera()
 	spawn_level_transition()
 	spawn_pause_menu()
+	spawn_spikes()
 
 
 func spawn_camera() -> void:
@@ -47,6 +48,17 @@ func spawn_pause_menu() -> void:
 	pause_menu.setup_pause_menu()
 	pause_menu.hide()
 	pause_menu.go_back.connect(func(): pause_menu.hide(); get_tree().paused = false)
+
+
+func spawn_spikes() -> void:
+	var spikes_layer := get_node_or_null("Tiles/LayerHazard") as TileMapLayer
+	if spikes_layer:
+		var tiles := spikes_layer.get_used_cells_by_id(0, Vector2i(0,0))
+		for tile in tiles:
+			var spikes_pos := tile * 16
+			var spikes := preload("res://src/game/spike_collision_area.tscn").instantiate()
+			spikes.position = spikes_pos
+			add_child(spikes)
 
 
 func play_text_box(text_box: TextBox) -> void:

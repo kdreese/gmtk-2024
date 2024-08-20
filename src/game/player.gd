@@ -15,12 +15,16 @@ extends CharacterBody2D
 @export var DASH_COOLDOWN := 0.3
 @export var GROUNDED_JUMP_VELOCITY := -300.0
 @export var AERIAL_JUMP_VELOCITY := -280.0
-@export var JUMP_RELEASE_VELOCITY_REDUCTION := 3.0
+@export var JUMP_RELEASE_VELOCITY_REDUCTION := 1.8
 @export var COYOTE_TIME_LIMIT := 0.2
 @export var LANDING_JUMP_BUFFER_TIME := 0.05
+@export var PLAYER_DEATH_X_VEL := 50.0
+@export var PLAYER_DEATH_Y_VEL := -50.0
 
 
 var facing_dir := 1
+var is_hurt := false
+var damaging_area: Area2D
 
 # Jump variables
 @export var unlocked_double_jump := true
@@ -57,6 +61,16 @@ func _physics_process(delta: float) -> void:
 	var deceleration: float
 	var turn_speed: float
 	var max_speed_change: float
+
+	if is_hurt:
+		velocity *= 0.93
+		move_and_slide()
+		var alpha := minf($HurtTimer.time_left, 1.0)
+		if fmod($HurtTimer.time_left, 0.25) > 0.125:
+			$AnimatedSprite2D.modulate = Color(1, 0.6, 0.6, 0.6 * alpha)
+		else:
+			$AnimatedSprite2D.modulate = Color(1, 1, 1, alpha)
+		return
 
 	if not can_move:
 		return
@@ -138,7 +152,8 @@ func _physics_process(delta: float) -> void:
 			is_dashing = false
 			is_dash_on_cooldown = true
 			dash_time = 0
-			animated_sprite_2d.play("dash_end")
+			if animated_sprite_2d.animation == "dash":
+				animated_sprite_2d.play("dash_end")
 			swap_collision_states()
 	else:
 		if direction != 0:
@@ -200,3 +215,19 @@ func swap_collision_states() -> void:
 	else:
 		standing_collision_shape.disabled = false
 		dashing_collision_shape.disabled = true
+
+
+func _on_hurt_box_area_entered(area: Area2D) -> void:
+	hurt_player()
+	damaging_area = area
+
+
+func hurt_player() -> void:
+	is_hurt = true
+	animated_sprite_2d.play("hurt")
+	$HurtTimer.start()
+	velocity = Vector2(sign(facing_dir) * -PLAYER_DEATH_X_VEL, PLAYER_DEATH_Y_VEL)
+
+
+func _on_hurt_timer_timeout() -> void:
+	get_tree().reload_current_scene()
