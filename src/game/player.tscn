@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://5t5rtqxp61dy"]
+[gd_scene load_steps=11 format=3 uid="uid://5t5rtqxp61dy"]
 
 [ext_resource type="Script" path="res://src/game/player.gd" id="1_21smu"]
 [ext_resource type="SpriteFrames" uid="uid://jafc2qhbf2t8" path="res://resources/player_sprite_frames.tres" id="2_ai1lc"]
@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://c0r84jdrakxdw" path="res://assets/sounds/step_1.wav" id="5_248jy"]
 [ext_resource type="AudioStream" uid="uid://do08kia4b73op" path="res://assets/sounds/step_2.wav" id="6_h4xha"]
 [ext_resource type="AudioStream" uid="uid://bied2qfideagg" path="res://assets/sounds/step_3.wav" id="7_t5l3s"]
+[ext_resource type="AudioStream" uid="uid://drfgv6g3r0vpc" path="res://assets/sounds/hurt.wav" id="8_l3rwa"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6takb"]
 radius = 8.0
@@ -62,6 +63,10 @@ bus = &"Sound"
 [node name="Step3" type="AudioStreamPlayer" parent="Audio/Steps"]
 stream = ExtResource("7_t5l3s")
 max_polyphony = 5
+bus = &"Sound"
+
+[node name="Hurt" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("8_l3rwa")
 bus = &"Sound"
 
 [node name="StepTimer" type="Timer" parent="."]
