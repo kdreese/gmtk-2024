@@ -8,6 +8,7 @@
 
 [node name="FinalLevel" type="Node2D"]
 script = ExtResource("1_1mxsk")
+should_spawn_background = false
 
 [node name="Tiles" type="Node2D" parent="."]
 

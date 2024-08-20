@@ -3,23 +3,46 @@ class_name BaseLevel
 extends Node2D
 
 
+@export var should_spawn_background := true
+
 var player: Player
 var pause_menu: Control
 var text_box: TextBox
+var puzzle_console: PuzzleConsole
 
 
 func _ready() -> void:
 	spawn_camera()
-	spawn_level_transition()
+	if should_spawn_background:
+		spawn_background()
+	spawn_puzzle_console()
+	spawn_text_box()
 	spawn_pause_menu()
 	spawn_spikes()
-	spawn_text_box()
+	spawn_level_transition()
 
 
-func play_dialog(lines: Array[String]) -> void:
-	player.freeze()
+func play_dialog(lines: Array[String], freeze_unfreeze := true) -> void:
+	if not lines or lines.is_empty():
+		return
+	if freeze_unfreeze:
+		player.freeze()
 	text_box.play(lines)
 	await text_box.text_finished
+	if freeze_unfreeze:
+		player.unfreeze()
+
+
+func play_puzzle(puzzle: PackedScene, dialog_before: Array[String] = [], dialog_after: Array[String] = []) -> void:
+	player.freeze()
+	puzzle_console.show()
+	await puzzle_console.load_puzzle(puzzle)
+	@warning_ignore("redundant_await")
+	await play_dialog(dialog_before, false)
+	await puzzle_console.puzzle_complete
+	@warning_ignore("redundant_await")
+	await play_dialog(dialog_after, false)
+	puzzle_console.hide()
 	player.unfreeze()
 
 
@@ -78,6 +101,16 @@ func spawn_text_box() -> void:
 	text_box = preload("res://src/ui/text_box.tscn").instantiate()
 	add_child(text_box)
 	text_box.hide()
+
+
+func spawn_puzzle_console() -> void:
+	puzzle_console = preload("res://src/puzzles/puzzle_console.tscn").instantiate()
+	add_child(puzzle_console)
+	puzzle_console.hide()
+
+
+func spawn_background() -> void:
+	add_child(preload("res://src/levels/parallax_background.tscn").instantiate())
 
 
 func _input(event: InputEvent) -> void:

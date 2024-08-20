@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://bev30cs4p44qc"]
+[gd_scene load_steps=10 format=4 uid="uid://bev30cs4p44qc"]
 
 [ext_resource type="Script" path="res://src/levels/level_2.gd" id="1_64myg"]
 [ext_resource type="PackedScene" uid="uid://cy1v14n8ap7q8" path="res://src/puzzles/flow/flow_puzzle_2.tscn" id="2_0tcxn"]
@@ -6,8 +6,6 @@
 [ext_resource type="TileSet" uid="uid://bth3qospiuewq" path="res://resources/tilesets/tileset_02.tres" id="3_envvs"]
 [ext_resource type="PackedScene" uid="uid://5t5rtqxp61dy" path="res://src/game/player.tscn" id="4_ebopm"]
 [ext_resource type="PackedScene" uid="uid://cg0hj1r053cvc" path="res://src/game/terminal.tscn" id="5_capvt"]
-[ext_resource type="PackedScene" uid="uid://pxn4070gykuf" path="res://src/puzzles/puzzle_console.tscn" id="6_wx2ar"]
-[ext_resource type="PackedScene" uid="uid://6tep8thjsvg6" path="res://src/levels/parallax_background.tscn" id="7_s4pxi"]
 [ext_resource type="PackedScene" uid="uid://bexktds2khmdd" path="res://src/game/level_trigger.tscn" id="9_g5tcx"]
 [ext_resource type="PackedScene" uid="uid://ro4gcfqpqioc" path="res://src/game/help_point.tscn" id="10_wu0x7"]
 
@@ -16,7 +14,6 @@ size = Vector2(96, 96)
 
 [node name="Level2" type="Node2D"]
 script = ExtResource("1_64myg")
-puzzle = ExtResource("2_0tcxn")
 
 [node name="Tiles" type="Node2D" parent="."]
 
@@ -33,11 +30,8 @@ position = Vector2(64, 208)
 
 [node name="Terminal" parent="." instance=ExtResource("5_capvt")]
 position = Vector2(288, 208)
-
-[node name="PuzzleConsole" parent="." instance=ExtResource("6_wx2ar")]
-visible = false
-
-[node name="ParallaxBackground" parent="." instance=ExtResource("7_s4pxi")]
+puzzle = ExtResource("2_0tcxn")
+dialog_after = Array[String](["HOLY MOLY!!!!! you can now jump aGAIN! !!! !! wowzerz"])
 
 [node name="LevelTrigger" parent="." instance=ExtResource("9_g5tcx")]
 
@@ -48,5 +42,7 @@ shape = SubResource("RectangleShape2D_sve0o")
 [node name="HelpPoint" parent="." instance=ExtResource("10_wu0x7")]
 position = Vector2(216, 208)
 dialog = Array[String](["That jump looks too high to make!", "The terminal over there might be able to help with that..."])
+
+[connection signal="puzzle_complete" from="Terminal" to="." method="puzzle_completed"]
 
 [editable path="LevelTrigger"]
