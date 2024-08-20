@@ -227,6 +227,7 @@ func hurt_player() -> void:
 	is_hurt = true
 	animated_sprite_2d.play("hurt")
 	$HurtTimer.start()
+	$Audio/Hurt.play()
 	velocity = Vector2(sign(facing_dir) * -PLAYER_DEATH_X_VEL, PLAYER_DEATH_Y_VEL)
 
 
