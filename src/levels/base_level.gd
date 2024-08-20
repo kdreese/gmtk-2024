@@ -63,10 +63,13 @@ func spawn_spikes() -> void:
 
 func play_text_box(text_box: TextBox) -> void:
 	var player: CharacterBody2D = get_tree().get_first_node_in_group("Player")
-	player.freeze()
+	var was_frozen := bool(not player.can_move)
+	if not was_frozen:
+		player.freeze()
 	text_box.play()
 	await text_box.text_finished
-	player.unfreeze()
+	if not was_frozen:
+		player.unfreeze()
 
 
 func _input(event: InputEvent) -> void:

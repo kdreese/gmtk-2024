@@ -14,7 +14,8 @@ func _ready() -> void:
 func show_puzzle() -> void:
 	$Player.freeze()
 	$PuzzleConsole.show()
-	$PuzzleConsole.load_puzzle(puzzle)
+	await $PuzzleConsole.load_puzzle(puzzle)
+	play_text_box($TextBox)
 
 
 func puzzle_completed() -> void:

@@ -43,9 +43,15 @@ var reset_state: PackedByteArray
 var background: TileMapLayer
 var wires: TileMapLayer
 
+var disabled_stylebox: StyleBoxFlat
+var active_stylebox: StyleBoxFlat
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	active_stylebox = $Highlight.get_theme_stylebox("panel")
+	disabled_stylebox = active_stylebox.duplicate()
+	disabled_stylebox.border_color = Color(0.3, 0.3, 0.3, 1.0)
 	load_puzzle(puzzle_to_load)
 	reset()
 
@@ -72,6 +78,7 @@ func reset() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
+		show_highlight()
 		var mouse_pos := get_global_mouse_position()
 		var grid_coords := wires.local_to_map(wires.to_local(mouse_pos))
 		if grid_coords != mouseover_tile and LEVEL_BOUNDS.has_point(grid_coords):
@@ -104,6 +111,21 @@ func _input(event: InputEvent) -> void:
 					last_valid_tile = grid_coords
 				else:
 					color_to_place = INVALID
+
+
+func show_highlight() -> void:
+	var mouse_pos := get_global_mouse_position()
+	var mouse_grid_pos := wires.local_to_map(wires.to_local(mouse_pos))
+	var atlas_coords := wires.get_cell_atlas_coords(mouse_grid_pos)
+	if atlas_coords.x in [0, 1, 2]:
+		$Highlight.add_theme_stylebox_override("panel", active_stylebox)
+	else:
+		$Highlight.add_theme_stylebox_override("panel", disabled_stylebox)
+	if LEVEL_BOUNDS.has_point(mouse_grid_pos):
+		$Highlight.show()
+		$Highlight.position = 64.0 * mouse_grid_pos
+	else:
+		$Highlight.hide()
 
 
 func mouse_entered_tile(curr: Vector2i) -> void:
