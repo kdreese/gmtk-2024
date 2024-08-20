@@ -52,7 +52,7 @@ func skip_to_end_of_line() -> void:
 func _input(event: InputEvent) -> void:
 	if not visible:
 		return
-	if event.is_action_pressed("jump") or event.is_action_pressed("ui_accept"):
+	if event.is_action_pressed("interact") or event.is_action_pressed("ui_accept"):
 		next.emit()
 		get_viewport().set_input_as_handled()
 	elif event is InputEventMouseButton:
