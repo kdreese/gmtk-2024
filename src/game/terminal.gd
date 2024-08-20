@@ -27,6 +27,8 @@ func _on_body_exited(_body: Node2D) -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact") and interact_label.visible:
 		collision_shape.disabled = true
-		await owner.play_puzzle(puzzle, dialog_before, dialog_after)
+		await owner.play_puzzle(puzzle, dialog_before)
 		animated_sprite.play("on")
 		puzzle_complete.emit()
+		@warning_ignore("redundant_await")
+		await owner.play_dialog(dialog_after)

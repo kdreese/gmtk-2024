@@ -1,6 +1,5 @@
 extends BaseLevel
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	super._ready()
+func puzzle_completed() -> void:
+	player.unlocked_dash = true

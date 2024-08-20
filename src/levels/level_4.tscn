@@ -1,11 +1,18 @@
-[gd_scene load_steps=7 format=4 uid="uid://v3wj5uvo2t0x"]
+[gd_scene load_steps=12 format=4 uid="uid://v3wj5uvo2t0x"]
 
 [ext_resource type="TileSet" uid="uid://prouykjdur4o" path="res://resources/tilesets/tileset_01.tres" id="1_ajwsl"]
 [ext_resource type="Script" path="res://src/levels/level_4.gd" id="1_wena7"]
 [ext_resource type="TileSet" uid="uid://bth3qospiuewq" path="res://resources/tilesets/tileset_02.tres" id="2_s65bi"]
 [ext_resource type="TileSet" uid="uid://bhe320tinxady" path="res://resources/tilesets/tileset_objects.tres" id="3_wr76b"]
-[ext_resource type="PackedScene" uid="uid://6tep8thjsvg6" path="res://src/levels/parallax_background.tscn" id="4_ps4ja"]
 [ext_resource type="PackedScene" uid="uid://5t5rtqxp61dy" path="res://src/game/player.tscn" id="5_7rdlt"]
+[ext_resource type="PackedScene" uid="uid://ro4gcfqpqioc" path="res://src/game/help_point.tscn" id="6_n3ogm"]
+[ext_resource type="PackedScene" uid="uid://cg0hj1r053cvc" path="res://src/game/terminal.tscn" id="7_vv1rv"]
+[ext_resource type="PackedScene" uid="uid://q6lobq1gs4av" path="res://src/puzzles/flow/flow_puzzle_4.tscn" id="8_d3d2t"]
+[ext_resource type="PackedScene" uid="uid://bexktds2khmdd" path="res://src/game/level_trigger.tscn" id="9_mqm4v"]
+[ext_resource type="PackedScene" uid="uid://bg5eyr48k52fu" path="res://src/levels/level_5.tscn" id="10_brb45"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gwwga"]
+size = Vector2(88, 82)
 
 [node name="Level4" type="Node2D"]
 script = ExtResource("1_wena7")
@@ -23,7 +30,28 @@ tile_set = ExtResource("2_s65bi")
 [node name="LayerHazard" type="TileMapLayer" parent="Tiles"]
 tile_set = ExtResource("3_wr76b")
 
-[node name="ParallaxBackground" parent="." instance=ExtResource("4_ps4ja")]
-
 [node name="Player" parent="." instance=ExtResource("5_7rdlt")]
 position = Vector2(31, 34)
+unlocked_double_jump = true
+
+[node name="HelpPoint" parent="." instance=ExtResource("6_n3ogm")]
+position = Vector2(64, 432)
+dialog = Array[String](["Woah, that was a long fall."])
+
+[node name="Terminal" parent="." instance=ExtResource("7_vv1rv")]
+position = Vector2(368, 512)
+puzzle = ExtResource("8_d3d2t")
+dialog_after = Array[String](["You unlocked a dash! Press Shift to dash in the direction you're going.", "You might be able to use it to cross certain unspecified large gaps."])
+
+[node name="HelpPoint2" parent="." instance=ExtResource("6_n3ogm")]
+position = Vector2(296, 512)
+dialog = Array[String](["I don't think you can get up there with your two jumps alone."])
+
+[node name="LevelTrigger" parent="." instance=ExtResource("9_mqm4v")]
+scene_to_load = ExtResource("10_brb45")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelTrigger"]
+position = Vector2(484, 287)
+shape = SubResource("RectangleShape2D_gwwga")
+
+[connection signal="puzzle_complete" from="Terminal" to="." method="puzzle_completed"]

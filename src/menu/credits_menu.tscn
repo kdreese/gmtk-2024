@@ -83,7 +83,7 @@ Terry Hearst	Andrew Moore	Kyle Reese
 Terry Hearst	Andrew Moore	Kyle Reese
 
 [font_size=28]Writing[/font_size]
-<TODO>"
+Terry Hearst	Andrew Moore"
 tab_size = 8
 
 [node name="RichTextLabel2" type="RichTextLabel" parent="MarginContainer/HBoxContainer"]

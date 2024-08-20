@@ -53,5 +53,5 @@ tile_set = SubResource("TileSet_alhje")
 [node name="Wires" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
 scale = Vector2(4, 4)
-tile_map_data = PackedByteArray("AAABAAIAAAABAAIAAAAGAAIAAAAAAAIAAAABAAUAAAAAAAMAAAAGAAUAAAAAAAMAAAACAAIAAAACAAIAAAA=")
+tile_map_data = PackedByteArray("AAABAAIAAAABAAIAAAAGAAIAAAAAAAIAAAABAAUAAAAAAAMAAAAGAAUAAAAAAAMAAAACAAIAAAAEAAIAAAAEAAIAAAACAAIAAAADAAIAAAAEAAIAAAA=")
 tile_set = SubResource("TileSet_48p5p")
