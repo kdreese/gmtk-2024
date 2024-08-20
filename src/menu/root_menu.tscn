@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://src/menu/root_menu.gd" id="1_rxcut"]
 [ext_resource type="PackedScene" uid="uid://ccfpknolo5c7n" path="res://src/menu/main_menu.tscn" id="1_ua32a"]
-[ext_resource type="PackedScene" uid="uid://4djflhfxpkul" path="res://src/menu/settings_menu.tscn" id="3_lplnc"]
+[ext_resource type="PackedScene" path="res://src/menu/settings_menu.tscn" id="3_lplnc"]
 [ext_resource type="PackedScene" uid="uid://dhev2kbdyj14q" path="res://src/menu/credits_menu.tscn" id="3_x51gt"]
-[ext_resource type="PackedScene" uid="uid://6tep8thjsvg6" path="res://src/levels/parallax_background.tscn" id="4_sfgg1"]
+[ext_resource type="PackedScene" path="res://src/levels/parallax_background.tscn" id="4_sfgg1"]
 
 [node name="RootMenu" type="Node"]
 script = ExtResource("1_rxcut")
