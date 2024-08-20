@@ -47,6 +47,8 @@ var has_used_aerial_dash := false
 @onready var standing_collision_shape: CollisionShape2D = $StandingCollisionShape
 @onready var dashing_collision_shape: CollisionShape2D = $DashingCollisionShape
 
+var can_move := true
+
 
 func _ready() -> void:
 	animated_sprite_2d.play("idle")
@@ -68,6 +70,9 @@ func _physics_process(delta: float) -> void:
 			$AnimatedSprite2D.modulate = Color(1, 0.6, 0.6, 0.6 * alpha)
 		else:
 			$AnimatedSprite2D.modulate = Color(1, 1, 1, alpha)
+		return
+
+	if not can_move:
 		return
 
 	# Add the gravity.
@@ -165,6 +170,18 @@ func _physics_process(delta: float) -> void:
 			animated_sprite_2d.play("walk")
 
 	move_and_slide()
+
+
+func freeze() -> void:
+	can_move = false
+	$AnimatedSprite2D.pause()
+	$StepTimer.stop()
+	velocity = Vector2.ZERO
+
+
+func unfreeze() -> void:
+	can_move = true
+	$AnimatedSprite2D.play()
 
 
 func jump(is_grounded_jump: bool) -> void:

@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://bjmfiyf5uklt7"]
 
-[ext_resource type="Texture2D" uid="uid://c23ola5o7xlu2" path="res://assets/pipes_tileset.png" id="1_8trav"]
+[ext_resource type="Texture2D" uid="uid://c23ola5o7xlu2" path="res://assets/tileset/pipes_tileset.png" id="1_8trav"]
 [ext_resource type="Script" path="res://src/puzzles/pipes/pipe.gd" id="2_863e4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vlqs1"]
