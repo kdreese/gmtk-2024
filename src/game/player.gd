@@ -232,4 +232,5 @@ func hurt_player() -> void:
 
 
 func _on_hurt_timer_timeout() -> void:
+	SpeedrunTimer.start_loading()
 	get_tree().reload_current_scene()

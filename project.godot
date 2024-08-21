@@ -19,6 +19,7 @@ config/icon="res://assets/ui/icon.png"
 [autoload]
 
 MusicManager="*res://src/autoload/music_manager.tscn"
+SpeedrunTimer="*res://src/autoload/speedrun_timer.tscn"
 Global="*res://src/autoload/global.gd"
 
 [display]

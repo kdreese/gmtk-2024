@@ -20,6 +20,7 @@ func _ready() -> void:
 	spawn_pause_menu()
 	spawn_spikes()
 	spawn_level_transition()
+	SpeedrunTimer.stop_loading()
 
 
 func play_dialog(lines: Array[String], freeze_unfreeze := true) -> void:

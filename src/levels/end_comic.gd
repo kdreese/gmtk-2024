@@ -44,6 +44,7 @@ func _input(event: InputEvent) -> void:
 			animation_player.play("fade_out")
 			get_viewport().set_input_as_handled()
 			await animation_player.animation_finished
+			SpeedrunTimer.quit_speedrun()
 			get_tree().change_scene_to_file("res://src/menu/root_menu.tscn")
 
 

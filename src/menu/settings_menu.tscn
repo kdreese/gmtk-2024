@@ -108,6 +108,12 @@ layout_mode = 2
 size_flags_horizontal = 4
 text = "Fullscreen"
 
+[node name="SpeedrunButton" type="CheckButton" parent="CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Speedrun Timer"
+
 [node name="Spacer2" type="Control" parent="CenterContainer/VBoxContainer"]
 unique_name_in_owner = true
 visible = false
@@ -143,6 +149,7 @@ Progress will not be saved!"
 [connection signal="value_changed" from="CenterContainer/VBoxContainer/GridContainer/SoundSlider" to="." method="_on_sound_slider_value_changed"]
 [connection signal="value_changed" from="CenterContainer/VBoxContainer/GridContainer/MusicSlider" to="." method="_on_music_slider_value_changed"]
 [connection signal="toggled" from="CenterContainer/VBoxContainer/FullscreenButton" to="." method="_on_fullscreen_button_toggled"]
+[connection signal="toggled" from="CenterContainer/VBoxContainer/SpeedrunButton" to="." method="_on_speedrun_button_toggled"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
 [connection signal="canceled" from="QuitDialog" to="." method="_on_quit_dialog_canceled"]
 [connection signal="confirmed" from="QuitDialog" to="." method="_on_quit_dialog_confirmed"]
