@@ -31,6 +31,12 @@ func _ready() -> void:
 	speedrun_button.set_pressed_no_signal(Global.prefs["speedrun"])
 
 
+func _process(_delta: float) -> void:
+	var is_fullscreen := get_window().mode == Window.MODE_FULLSCREEN
+	if is_fullscreen != fullscreen_button.button_pressed:
+		fullscreen_button.set_pressed_no_signal(is_fullscreen)
+
+
 func setup_pause_menu() -> void:
 	title.text = "Paused"
 	back_button.text = "Resume"

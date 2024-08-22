@@ -79,6 +79,13 @@ func process_cmdline_args() -> void:
 		prefs["speedrun"] = true
 
 
+func _input(event: InputEvent) -> void:
+	if not OS.has_feature("web") and event.is_action_pressed("toggle_fullscreen"):
+		var window := get_window()
+		prefs["fullscreen"] = window.mode != Window.MODE_FULLSCREEN
+		enact_prefs()
+		window.set_input_as_handled()
+
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
