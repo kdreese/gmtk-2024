@@ -83,6 +83,7 @@ func spawn_pause_menu() -> void:
 	canvas_layer.add_child(pause_menu)
 	pause_menu.setup_pause_menu()
 	pause_menu.hide()
+	canvas_layer.layer = 3
 	pause_menu.go_back.connect(func(): pause_menu.hide(); get_tree().paused = false)
 
 

@@ -25,6 +25,7 @@ func start_speedrun() -> void:
 	is_running = true
 	is_in_game = true
 	is_loading = false
+	speedrun_ticks = 0
 	update_label_visibility()
 	update_label_text()
 
