@@ -146,7 +146,8 @@ func mouse_entered_tile(new: Vector2i) -> void:
 		curr += direction
 		var is_impassable := (background.get_cell_atlas_coords(curr) == Vector2i(1,0))
 		if is_impassable:
-			$WrongSound.play()
+			if curr == new:
+				$WrongSound.play()
 			return
 
 		var connecting_to_tile: bool = false
@@ -156,7 +157,8 @@ func mouse_entered_tile(new: Vector2i) -> void:
 			if atlas_coords in [Vector2i(0, color_to_place), Vector2i(2, color_to_place)]:
 				connecting_to_tile = true
 			else:
-				$WrongSound.play()
+				if curr == new:
+					$WrongSound.play()
 				return
 
 		var prev_atlas_coords := wires.get_cell_atlas_coords(last_valid_tile)
@@ -173,7 +175,8 @@ func mouse_entered_tile(new: Vector2i) -> void:
 		if connecting_to_tile:
 			var cur_atlas_coords := wires.get_cell_atlas_coords(curr)
 			if cur_atlas_coords not in [Vector2i(0, color_to_place), Vector2i(2, color_to_place)]:
-				$WrongSound.play()
+				if curr == new:
+					$WrongSound.play()
 				return
 			if cur_atlas_coords.x == 0:
 				var result := get_vertex_tile_params(-direction, true)
