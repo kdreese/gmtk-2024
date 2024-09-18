@@ -12,6 +12,7 @@ signal go_back()
 @onready var music_indicator: Label = %MusicIndicator
 
 @onready var fullscreen_button: CheckButton = %FullscreenButton
+@onready var speedrun_button: CheckButton = %SpeedrunButton
 
 @onready var spacer2: Control = %Spacer2
 @onready var quit_button: Button = %QuitButton
@@ -27,6 +28,13 @@ func _ready() -> void:
 	music_indicator.text = "%d%%" % [100 * Global.prefs["music_volume"]]
 
 	fullscreen_button.set_pressed_no_signal(Global.prefs["fullscreen"])
+	speedrun_button.set_pressed_no_signal(Global.prefs["speedrun"])
+
+
+func _process(_delta: float) -> void:
+	var is_fullscreen := get_window().mode == Window.MODE_FULLSCREEN
+	if is_fullscreen != fullscreen_button.button_pressed:
+		fullscreen_button.set_pressed_no_signal(is_fullscreen)
 
 
 func setup_pause_menu() -> void:
@@ -60,12 +68,18 @@ func _on_fullscreen_button_toggled(toggled_on: bool) -> void:
 	Global.enact_prefs()
 
 
+func _on_speedrun_button_toggled(toggled_on: bool) -> void:
+	Global.prefs["speedrun"] = toggled_on
+	Global.enact_prefs()
+
+
 func _on_quit_button_pressed() -> void:
 	quit_dim_rect.show()
 	quit_dialog.popup_centered()
 
 
 func _on_quit_dialog_confirmed() -> void:
+	SpeedrunTimer.quit_speedrun()
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://src/menu/root_menu.tscn")
 

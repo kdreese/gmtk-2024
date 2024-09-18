@@ -128,67 +128,74 @@ func show_highlight() -> void:
 		$Highlight.hide()
 
 
-func mouse_entered_tile(curr: Vector2i) -> void:
-	if color_to_place == -1:
+func mouse_entered_tile(new: Vector2i) -> void:
+	if color_to_place == INVALID:
 		return
 
-	var prev := last_valid_tile
+	var full_direction := new - last_valid_tile
 
-	var direction := curr - prev
-
-	if direction not in [Vector2i.LEFT, Vector2i.DOWN, Vector2i.RIGHT, Vector2i.UP]:
-		# We didn't go in a cardinal direction.
+	if full_direction.sign().length_squared() != 1:
+		# We didn't go in a cardinal direction (any number of steps).
 		return
 
-	var is_impassable := (background.get_cell_atlas_coords(curr) == Vector2i(1,0))
-	if is_impassable:
-		$WrongSound.play()
-		return
+	var direction := full_direction.sign()
+	var steps := int(full_direction.length())
 
-	var connecting_to_tile: bool = false
-	var cur_source_id := wires.get_cell_source_id(curr)
-	if cur_source_id == 0:
-		var atlas_coords := wires.get_cell_atlas_coords(curr)
-		if atlas_coords in [Vector2i(0, color_to_place), Vector2i(2, color_to_place)]:
-			connecting_to_tile = true
-		else:
-			$WrongSound.play()
+	var curr := last_valid_tile
+	for i in range(steps):
+		curr += direction
+		var is_impassable := (background.get_cell_atlas_coords(curr) == Vector2i(1,0))
+		if is_impassable:
+			if curr == new:
+				$WrongSound.play()
 			return
 
-	var prev_atlas_coords := wires.get_cell_atlas_coords(prev)
-	if prev_atlas_coords.x == 0:
-		var result := get_vertex_tile_params(direction, true)
-		wires.set_cell(prev, 0, Vector2i(result[0], color_to_place), result[1])
-	elif prev_atlas_coords.x == 2:
-		var alt_tile := wires.get_cell_alternative_tile(prev)
-		var direction_2 := get_vertex_direction(alt_tile, false)
-		var result := get_edge_tile_params(direction, direction_2)
-		wires.set_cell(prev, 0, Vector2i(result[0], color_to_place), result[1])
+		var connecting_to_tile: bool = false
+		var cur_source_id := wires.get_cell_source_id(curr)
+		if cur_source_id == 0:
+			var atlas_coords := wires.get_cell_atlas_coords(curr)
+			if atlas_coords in [Vector2i(0, color_to_place), Vector2i(2, color_to_place)]:
+				connecting_to_tile = true
+			else:
+				if curr == new:
+					$WrongSound.play()
+				return
 
-	# Previous atlas coords were checked when we clicked.
-	if connecting_to_tile:
-		var cur_atlas_coords := wires.get_cell_atlas_coords(curr)
-		if cur_atlas_coords not in [Vector2i(0, color_to_place), Vector2i(2, color_to_place)]:
-			$WrongSound.play()
-			return
-		if cur_atlas_coords.x == 0:
-			var result := get_vertex_tile_params(-direction, true)
-			wires.set_cell(curr, 0, Vector2i(result[0], color_to_place), result[1])
-			color_to_place = INVALID
-		else:
-			var alt_tile := wires.get_cell_alternative_tile(curr)
+		var prev_atlas_coords := wires.get_cell_atlas_coords(last_valid_tile)
+		if prev_atlas_coords.x == 0:
+			var result := get_vertex_tile_params(direction, true)
+			wires.set_cell(last_valid_tile, 0, Vector2i(result[0], color_to_place), result[1])
+		elif prev_atlas_coords.x == 2:
+			var alt_tile := wires.get_cell_alternative_tile(last_valid_tile)
 			var direction_2 := get_vertex_direction(alt_tile, false)
-			var result := get_edge_tile_params(-direction, direction_2)
+			var result := get_edge_tile_params(direction, direction_2)
+			wires.set_cell(last_valid_tile, 0, Vector2i(result[0], color_to_place), result[1])
+
+		# Previous atlas coords were checked when we clicked.
+		if connecting_to_tile:
+			var cur_atlas_coords := wires.get_cell_atlas_coords(curr)
+			if cur_atlas_coords not in [Vector2i(0, color_to_place), Vector2i(2, color_to_place)]:
+				if curr == new:
+					$WrongSound.play()
+				return
+			if cur_atlas_coords.x == 0:
+				var result := get_vertex_tile_params(-direction, true)
+				wires.set_cell(curr, 0, Vector2i(result[0], color_to_place), result[1])
+				color_to_place = INVALID
+			else:
+				var alt_tile := wires.get_cell_alternative_tile(curr)
+				var direction_2 := get_vertex_direction(alt_tile, false)
+				var result := get_edge_tile_params(-direction, direction_2)
+				wires.set_cell(curr, 0, Vector2i(result[0], color_to_place), result[1])
+				color_to_place = INVALID
+		else:
+			var result := get_vertex_tile_params(-direction, false)
 			wires.set_cell(curr, 0, Vector2i(result[0], color_to_place), result[1])
-			color_to_place = INVALID
-	else:
-		var result := get_vertex_tile_params(-direction, false)
-		wires.set_cell(curr, 0, Vector2i(result[0], color_to_place), result[1])
 
-	if not connecting_to_tile:
-		$PlaceSound.play()
+		if not connecting_to_tile:
+			$PlaceSound.play()
 
-	last_valid_tile = curr
+		last_valid_tile = curr
 
 
 func get_edge_directions(atlas_coords: Vector2i, alternative_tile: int) -> Array[Vector2i]:

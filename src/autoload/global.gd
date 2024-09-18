@@ -7,6 +7,7 @@ const DEFAULT_PREFS := {
 	"sound_volume": 0.5,
 	"music_volume": 0.3,
 	"fullscreen": false,
+	"speedrun": false,
 }
 
 var prefs: Dictionary
@@ -14,6 +15,7 @@ var prefs: Dictionary
 
 func _ready() -> void:
 	load_prefs()
+	process_cmdline_args()
 	enact_prefs()
 
 
@@ -56,6 +58,8 @@ func enact_prefs() -> void:
 	if prefs["fullscreen"] != is_fullscreen:
 		window.mode = Window.MODE_FULLSCREEN if prefs["fullscreen"] else Window.MODE_WINDOWED
 
+	SpeedrunTimer.update_label_visibility()
+
 
 func save_prefs() -> void:
 	var f := FileAccess.open(PREFS_FILE, FileAccess.WRITE)
@@ -68,6 +72,19 @@ func save_prefs() -> void:
 	f.store_string(json)
 
 	f.close()
+
+
+func process_cmdline_args() -> void:
+	if "--gotta-robot-fast" in OS.get_cmdline_user_args():
+		prefs["speedrun"] = true
+
+
+func _input(event: InputEvent) -> void:
+	if not OS.has_feature("web") and event.is_action_pressed("toggle_fullscreen"):
+		var window := get_window()
+		prefs["fullscreen"] = window.mode != Window.MODE_FULLSCREEN
+		enact_prefs()
+		window.set_input_as_handled()
 
 
 func _notification(what: int) -> void:

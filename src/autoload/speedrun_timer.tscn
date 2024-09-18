@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://djjxssudgrspt"]
+
+[ext_resource type="Script" path="res://src/autoload/speedrun_timer.gd" id="1_fekle"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_qlnh7"]
+font_size = 41
+
+[node name="SpeedrunTimer" type="CanvasLayer"]
+layer = 5
+script = ExtResource("1_fekle")
+
+[node name="TimerLabel" type="Label" parent="."]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 240.0
+offset_bottom = 61.0
+text = "12:34.567"
+label_settings = SubResource("LabelSettings_qlnh7")

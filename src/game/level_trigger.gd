@@ -16,4 +16,5 @@ func on_body_entered(_body: Node2D) -> void:
 	if level_transition != null:
 		level_transition.close()
 		await level_transition.animation_finished
+	SpeedrunTimer.start_loading()
 	get_tree().change_scene_to_packed(scene_to_load)
